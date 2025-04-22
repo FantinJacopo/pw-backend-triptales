@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+
+# Virtualenv
+env/
+venv/
+ENV/
+*.env
+*.venv
+
+# Django stuff:
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+static_root/
+*.pid
+
+# MySQL dumps
+*.sql
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# PyCharm
+.idea/
+
+# System
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Git
+*.orig
