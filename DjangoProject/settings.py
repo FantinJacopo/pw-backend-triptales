@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'backendtriptales.apps.BackendtriptalesConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
