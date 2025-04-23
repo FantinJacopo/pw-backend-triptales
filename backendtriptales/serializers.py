@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import User, Comment, Badge, UserBadge, PostLike
+from .models import User, Comment, Badge, UserBadge, PostLike, TripGroup, Post
+
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -43,3 +44,15 @@ class PostLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostLike
         fields = '__all__'
+
+class TripGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TripGroup
+        fields = ['id', 'group_name', 'group_image_url', 'description', 'invite_code', 'created_at']
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['id', 'user', 'trip_group', 'image_url', 'smart_caption', 'latitude',
+                  'longitude', 'created_at', 'ocr_text', 'object_tags']
+        read_only_fields = ['user', 'created_at']
