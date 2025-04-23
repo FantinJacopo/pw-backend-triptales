@@ -9,6 +9,9 @@ from .views import (
     BadgeViewSet,
     UserBadgeViewSet,
     PostLikeViewSet,
+    UserRegistrationView,
+    TripGroupViewSet,
+    PostViewSet,
 )
 from .views import UserRegistrationView
 router = DefaultRouter()
@@ -16,6 +19,8 @@ router.register(r'comments', CommentViewSet)
 router.register(r'badges', BadgeViewSet)
 router.register(r'user-badges', UserBadgeViewSet)
 router.register(r'post-likes', PostLikeViewSet)
+router.register(r'groups', TripGroupViewSet)
+router.register(r'posts', PostViewSet)
 
 
 urlpatterns = [
