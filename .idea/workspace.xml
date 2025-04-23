@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="added models and db configuration">
-      <change afterPath="$PROJECT_DIR$/backendtriptales/urls.py" afterDir="false" />
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="first commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjangoProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjangoProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,9 +35,6 @@
     &quot;accountId&quot;: &quot;ef100bff-bc7c-4d61-b9e2-181ae15ca94f&quot;
   }
 }</component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -76,7 +70,6 @@
         <env name="DJANGO_SETTINGS_MODULE" value="DjangoProject.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.12" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -85,7 +78,7 @@
       <option name="port" value="8000" />
       <option name="host" value="" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="http://127.0.0.1:8000" />
+      <option name="browserUrl" value="" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
@@ -110,8 +103,7 @@
       <option name="presentableId" value="Default" />
       <updated>1745307667966</updated>
       <workItem from="1745307669019" duration="1181000" />
-      <workItem from="1745397735969" duration="3302000" />
-      <workItem from="1745417463610" duration="1938000" />
+      <workItem from="1745397735969" duration="2025000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -121,15 +113,7 @@
       <option name="project" value="LOCAL" />
       <updated>1745308036528</updated>
     </task>
-    <task id="LOCAL-00002" summary="added models and db configuration">
-      <option name="closed" value="true" />
-      <created>1745400525911</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1745400525911</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +144,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <MESSAGE value="added models and db configuration" />
-    <option name="LAST_COMMIT_MESSAGE" value="added models and db configuration" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
 </project>
