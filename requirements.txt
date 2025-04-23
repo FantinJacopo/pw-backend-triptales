@@ -1,0 +1,6 @@
+django==4.2
+mysqlclient
+djangorestframework
+python-decouple
+djangorestframework-simplejwt
+Pillow
