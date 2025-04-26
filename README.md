@@ -50,7 +50,7 @@ Contenuto di esempio:
 DB_NAME=pwtriptales_db
 DB_USER=root
 DB_PASSWORD=
-DB_HOST=localhost
+DB_HOST=INDIRIZZO_IP_DEL_DISPOSITIVO
 DB_PORT=3306
 ```
 
@@ -91,7 +91,7 @@ python manage.py createsuperuser
 ### 🚀 **8. Avvia il server di sviluppo**
 
 ```bash
-python manage.py runserver
+python manage.py runserver INDIRIZZO_IP_DEL_DISPOSITIVO
 ```
 
 Visita [http://localhost:8000](http://localhost:8000)  
