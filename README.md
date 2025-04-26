@@ -69,6 +69,11 @@ Esegui la seguente query SQL:
 CREATE DATABASE pwtriptales_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
+### 🔑 **5.1. Modifica le impostazioni di XAMPP**
+
+1. Apri il **pannello di controllo di XAMPP**
+2. Apri il file di configurazione my.ini di MySQL![img.png](img.png)
+3. cerca la riga `bind-address` e sostituisci `127.0.0.1` con l'indirizzo ip del dispositivo su cui desideri eseguire il backend
 ---
 
 ### 🔄 **6. Applica le migrazioni**
@@ -94,8 +99,8 @@ python manage.py createsuperuser
 python manage.py runserver INDIRIZZO_IP_DEL_DISPOSITIVO
 ```
 
-Visita [http://localhost:8000](http://localhost:8000)  
-L’admin sarà su [http://localhost:8000/admin](http://localhost:8000/admin)
+Visita [http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000](http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000)  
+L’admin sarà su [http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000/admin](http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000/admin)
 
 ---
 
