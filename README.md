@@ -63,10 +63,12 @@ DB_PORT=3306
 Accedi a phpMyAdmin:  
 http://localhost/phpmyadmin
 
-Esegui la seguente query SQL:
+Esegui le seguenti query SQL:
 
 ```sql
 CREATE DATABASE pwtriptales_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON pwtriptales_db.* TO 'root'@'' IDENTIFIED BY '';
+FLUSH PRIVILEGES;
 ```
 
 ### 🔑 **5.1. Modifica le impostazioni di XAMPP**
@@ -85,7 +87,7 @@ python manage.py migrate
 
 ---
 
-### 👑 **7. (Opzionale) Crea un superuser per accedere all’admin**
+### 👑 **7. (Opzionale) Crea un superuser per accedere come admin**
 
 ```bash
 python manage.py createsuperuser
