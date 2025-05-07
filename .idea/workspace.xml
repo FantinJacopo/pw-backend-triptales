@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Add authentication and permission classes; update API routes&#10;&#10;Configured default permission classes to require authentication for API usage in `settings.py`. Updated `urls.py` to include routes for user registration, trip groups, and posts. Minor adjustments made to `.idea/workspace.xml` related to IDE-specific configurations.">
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="first commit">
+      <change afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DjangoProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +30,12 @@
     &quot;assignee&quot;: &quot;FantinJacopo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/FantinJacopo/pw-backend-triptales.git&quot;,
-    &quot;accountId&quot;: &quot;c0c830ab-17fe-4a2f-8806-347c99887792&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/FantinJacopo/pw-backend-triptales.git",
+    "accountId": "e137239a-2ea0-42ae-b193-ec1359ce4e16"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -44,23 +44,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.DjangoProject.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.DjangoProject.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
+    "com.codeium.enabled": "true",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="DjangoProject" type="Python.DjangoServer" factoryName="Django server">
       <module name="DjangoProject" />
@@ -79,9 +79,9 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
-      <option name="host" value="" />
+      <option name="host" value="192.168.1.64" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="http://172.17.5.150:8000" />
+      <option name="browserUrl" value="http://192.168.1.64:8000" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
@@ -107,14 +107,7 @@
       <updated>1745307667966</updated>
       <workItem from="1745307669019" duration="1181000" />
       <workItem from="1745397735969" duration="2025000" />
-      <workItem from="1745422534052" duration="2360000" />
-      <workItem from="1745526370325" duration="1315000" />
-      <workItem from="1745819691649" duration="4067000" />
-      <workItem from="1745826510723" duration="5202000" />
-      <workItem from="1745923804542" duration="1840000" />
-      <workItem from="1746003092505" duration="212000" />
-      <workItem from="1746003325016" duration="4564000" />
-      <workItem from="1746597231279" duration="1393000" />
+      <workItem from="1745657599129" duration="4050000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -124,23 +117,7 @@
       <option name="project" value="LOCAL" />
       <updated>1745308036528</updated>
     </task>
-    <task id="LOCAL-00002" summary="Modified urls.py">
-      <option name="closed" value="true" />
-      <created>1745422502591</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1745422502591</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Add authentication and permission classes; update API routes&#10;&#10;Configured default permission classes to require authentication for API usage in `settings.py`. Updated `urls.py` to include routes for user registration, trip groups, and posts. Minor adjustments made to `.idea/workspace.xml` related to IDE-specific configurations.">
-      <option name="closed" value="true" />
-      <created>1745423648736</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1745423648738</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,8 +148,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <MESSAGE value="Modified urls.py" />
-    <MESSAGE value="Add authentication and permission classes; update API routes&#10;&#10;Configured default permission classes to require authentication for API usage in `settings.py`. Updated `urls.py` to include routes for user registration, trip groups, and posts. Minor adjustments made to `.idea/workspace.xml` related to IDE-specific configurations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add authentication and permission classes; update API routes&#10;&#10;Configured default permission classes to require authentication for API usage in `settings.py`. Updated `urls.py` to include routes for user registration, trip groups, and posts. Minor adjustments made to `.idea/workspace.xml` related to IDE-specific configurations." />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
 </project>

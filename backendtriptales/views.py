@@ -1,5 +1,7 @@
 from rest_framework import viewsets, generics, permissions
 from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post
 from .serializers import CommentSerializer, BadgeSerializer, UserBadgeSerializer, PostLikeSerializer, \
@@ -27,6 +29,14 @@ class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if not serializer.is_valid():
+            print(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class TripGroupViewSet(viewsets.ModelViewSet):
     queryset = TripGroup.objects.all()

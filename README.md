@@ -50,7 +50,7 @@ Contenuto di esempio:
 DB_NAME=pwtriptales_db
 DB_USER=root
 DB_PASSWORD=
-DB_HOST=localhost
+DB_HOST=INDIRIZZO_IP_DEL_DISPOSITIVO
 DB_PORT=3306
 ```
 
@@ -63,12 +63,19 @@ DB_PORT=3306
 Accedi a phpMyAdmin:  
 http://localhost/phpmyadmin
 
-Esegui la seguente query SQL:
+Esegui le seguenti query SQL:
 
 ```sql
 CREATE DATABASE pwtriptales_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON pwtriptales_db.* TO 'root'@'' IDENTIFIED BY '';
+FLUSH PRIVILEGES;
 ```
 
+### 🔑 **5.1. Modifica le impostazioni di XAMPP**
+
+1. Apri il **pannello di controllo di XAMPP**
+2. Apri il file di configurazione my.ini di MySQL![img.png](img.png)
+3. cerca la riga `bind-address` e sostituisci `127.0.0.1` con l'indirizzo ip del dispositivo su cui desideri eseguire il backend
 ---
 
 ### 🔄 **6. Applica le migrazioni**
@@ -80,7 +87,7 @@ python manage.py migrate
 
 ---
 
-### 👑 **7. (Opzionale) Crea un superuser per accedere all’admin**
+### 👑 **7. (Opzionale) Crea un superuser per accedere come admin**
 
 ```bash
 python manage.py createsuperuser
@@ -91,11 +98,11 @@ python manage.py createsuperuser
 ### 🚀 **8. Avvia il server di sviluppo**
 
 ```bash
-python manage.py runserver
+python manage.py runserver INDIRIZZO_IP_DEL_DISPOSITIVO
 ```
 
-Visita [http://localhost:8000](http://localhost:8000)  
-L’admin sarà su [http://localhost:8000/admin](http://localhost:8000/admin)
+Visita [http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000](http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000)  
+L’admin sarà su [http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000/admin](http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000/admin)
 
 ---
 
