@@ -49,6 +49,7 @@ class TripGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = TripGroup
         fields = ['id', 'group_name', 'group_image_url', 'description', 'invite_code', 'created_at']
+        read_only_fields = ['invite_code']
 
 class PostSerializer(serializers.ModelSerializer):
     class Meta:

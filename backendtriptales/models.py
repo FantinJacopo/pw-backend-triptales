@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
@@ -17,13 +19,18 @@ class User(AbstractUser):
 
 class TripGroup(models.Model):
     group_name = models.CharField(max_length=100)
-    group_image_url = models.URLField(blank=True, null=True)
-    description = models.TextField(blank=True)
-    invite_code = models.CharField(max_length=10, unique=True)
-    created_at = models.DateTimeField(default=timezone.now)
+    group_image_url = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    invite_code = models.CharField(max_length=10, unique=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        return self.group_name
+    def save(self, *args, **kwargs):
+        if not self.invite_code:
+            self.invite_code = self.generate_invite_code()
+        super().save(*args, **kwargs)
+
+    def generate_invite_code(self):
+        return str(uuid.uuid4())[:10]
 
 
 class Member(models.Model):
