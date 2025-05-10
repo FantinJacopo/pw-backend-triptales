@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -124,6 +125,18 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ), #In questo modo l'utente deve essere autenticato per poter usare le API
 }
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),      # token di accesso valido per 1 ora
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),      # token di rinnovo valido per 7 giorni
+    "ROTATE_REFRESH_TOKENS": False,                   # non ruota il refresh token ad ogni uso
+    "BLACKLIST_AFTER_ROTATION": False,                # (irrilevante se rotate=False)
+    "AUTH_HEADER_TYPES": ("Bearer",),                 # tipo di header usato (standard)
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+    "UPDATE_LAST_LOGIN": False                        # disattivato per performance (opzionale)
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
