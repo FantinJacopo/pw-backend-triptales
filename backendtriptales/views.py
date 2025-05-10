@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post
 from .serializers import CommentSerializer, BadgeSerializer, UserBadgeSerializer, PostLikeSerializer, \
-    UserRegistrationSerializer, TripGroupSerializer, PostSerializer
+    UserRegistrationSerializer, TripGroupSerializer, PostSerializer, PostCreateSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):
@@ -56,13 +56,19 @@ class GroupPostsView(APIView):
         posts = Post.objects.filter(trip_group_id=group_id)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
-    serializer_class = PostSerializer
     permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return PostCreateSerializer
+        return PostSerializer
+
+    def get_queryset(self):
+        # Mostra solo i post dell'utente loggato (oppure modifica se vuoi mostrarli a tutti)
+        return Post.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
-    def get_queryset(self):
-        return Post.objects.filter(user=self.request.user)

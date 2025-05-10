@@ -21,7 +21,7 @@ router.register(r'badges', BadgeViewSet)
 router.register(r'user-badges', UserBadgeViewSet)
 router.register(r'post-likes', PostLikeViewSet)
 router.register(r'groups', TripGroupViewSet)
-router.register(r'posts', PostViewSet)
+router.register(r'posts', PostViewSet, basename='posts')
 
 
 urlpatterns = [

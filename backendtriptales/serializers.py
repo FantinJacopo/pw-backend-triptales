@@ -57,3 +57,9 @@ class PostSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'trip_group', 'image_url', 'smart_caption', 'latitude',
                   'longitude', 'created_at', 'ocr_text', 'object_tags']
         read_only_fields = ['user', 'created_at']
+
+
+class PostCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = ['trip_group', 'image_url', 'smart_caption']
