@@ -1,7 +1,8 @@
-from rest_framework import viewsets, generics, permissions
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework import viewsets, generics
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post
 from .serializers import CommentSerializer, BadgeSerializer, UserBadgeSerializer, PostLikeSerializer, \
@@ -41,21 +42,27 @@ class UserRegistrationView(generics.CreateAPIView):
 class TripGroupViewSet(viewsets.ModelViewSet):
     queryset = TripGroup.objects.all()
     serializer_class = TripGroupSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         group = serializer.save()
         group.member_set.create(user=self.request.user, role='creator')
         return group
 
+class GroupPostsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, group_id):
+        posts = Post.objects.filter(trip_group_id=group_id)
+        serializer = PostSerializer(posts, many=True)
+        return Response(serializer.data)
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
     def get_queryset(self):
-        # Mostra solo i post nei gruppi in cui l'utente è membro
         return Post.objects.filter(user=self.request.user)

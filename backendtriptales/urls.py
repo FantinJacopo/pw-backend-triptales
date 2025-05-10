@@ -12,6 +12,7 @@ from .views import (
     UserRegistrationView,
     TripGroupViewSet,
     PostViewSet,
+    GroupPostsView,
 )
 from .views import UserRegistrationView
 router = DefaultRouter()
@@ -28,4 +29,5 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router.urls)),
+    path('groups/<int:group_id>/posts/', GroupPostsView.as_view(), name='group-posts'),
 ]
