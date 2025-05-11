@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework import viewsets, generics
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -30,6 +31,7 @@ class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
+    parser_classes = [MultiPartParser, FormParser]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -43,6 +45,7 @@ class TripGroupViewSet(viewsets.ModelViewSet):
     queryset = TripGroup.objects.all()
     serializer_class = TripGroupSerializer
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def perform_create(self, serializer):
         group = serializer.save()
@@ -60,6 +63,7 @@ class GroupPostsView(APIView):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -67,8 +71,9 @@ class PostViewSet(viewsets.ModelViewSet):
         return PostSerializer
 
     def get_queryset(self):
-        # Mostra solo i post dell'utente loggato (oppure modifica se vuoi mostrarli a tutti)
         return Post.objects.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+

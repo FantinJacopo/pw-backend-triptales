@@ -5,13 +5,12 @@ from django.db import models
 from django.utils import timezone
 
 class User(AbstractUser):
-    profile_image_url = models.URLField(blank=True, null=True)
+    profile_image = models.ImageField(upload_to='profiles/', blank=True, null=True)
     name = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
     registration_date = models.DateTimeField(default=timezone.now)
-
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']  # username obbligatorio per AbstractUser
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.name
@@ -19,7 +18,7 @@ class User(AbstractUser):
 
 class TripGroup(models.Model):
     group_name = models.CharField(max_length=100)
-    group_image_url = models.CharField(max_length=200, blank=True, null=True)
+    group_image = models.ImageField(upload_to='groups/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     invite_code = models.CharField(max_length=10, unique=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -50,7 +49,7 @@ class Member(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     trip_group = models.ForeignKey(TripGroup, on_delete=models.CASCADE)
-    image_url = models.URLField()
+    image = models.ImageField(upload_to='posts/', blank=True, null=True, default=None)
     smart_caption = models.CharField(max_length=255, blank=True)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)

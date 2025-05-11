@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="first commit">
-      <change afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Fixed group posts endpoint">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DjangoProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjangoProject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,12 +32,15 @@
     &quot;assignee&quot;: &quot;FantinJacopo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/FantinJacopo/pw-backend-triptales.git",
-    "accountId": "e137239a-2ea0-42ae-b193-ec1359ce4e16"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FantinJacopo/pw-backend-triptales.git&quot;,
+    &quot;accountId&quot;: &quot;ef100bff-bc7c-4d61-b9e2-181ae15ca94f&quot;
   }
-}]]></component>
+}</component>
+  <component name="HttpClientEndpointsTabState">
+    <option name="cachedRequestData" value="&lt;CachedHttpClientTabRequests /&gt;" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -44,23 +49,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.DjangoProject.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.DjangoProject.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;mariadb&quot;
+    ]
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="DjangoProject" type="Python.DjangoServer" factoryName="Django server">
       <module name="DjangoProject" />
@@ -79,9 +90,9 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
-      <option name="host" value="192.168.1.64" />
+      <option name="host" value="192.168.174.89" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="http://192.168.1.64:8000" />
+      <option name="browserUrl" value="http://192.168.174.89:8000" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
@@ -107,7 +118,14 @@
       <updated>1745307667966</updated>
       <workItem from="1745307669019" duration="1181000" />
       <workItem from="1745397735969" duration="2025000" />
-      <workItem from="1745657599129" duration="4050000" />
+      <workItem from="1745657599129" duration="4818000" />
+      <workItem from="1745672030342" duration="711000" />
+      <workItem from="1745736227541" duration="6865000" />
+      <workItem from="1745819794460" duration="526000" />
+      <workItem from="1745839267217" duration="701000" />
+      <workItem from="1746128791352" duration="2506000" />
+      <workItem from="1746865836993" duration="15719000" />
+      <workItem from="1746971316659" duration="5158000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -117,7 +135,63 @@
       <option name="project" value="LOCAL" />
       <updated>1745308036528</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Collegamento a XAMPP su una porta diversa da localhost">
+      <option name="closed" value="true" />
+      <created>1745670674410</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1745670674411</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Collegamento a XAMPP su una porta diversa da localhost - fix">
+      <option name="closed" value="true" />
+      <created>1745737163203</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1745737163204</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add custom create method to UserRegistrationView&#10;&#10;Introduce a `create` method in the `UserRegistrationView` to handle serializer validation explicitly and return appropriate HTTP responses. Also, fix a minor formatting issue in `AUTH_PASSWORD_VALIDATORS` within the settings file.">
+      <option name="closed" value="true" />
+      <created>1745744797275</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745744797275</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Add custom create method to UserRegistrationView&#10;&#10;Introduce a `create` method in the `UserRegistrationView` to handle serializer validation explicitly and return appropriate HTTP responses. Also, fix a minor formatting issue in `AUTH_PASSWORD_VALIDATORS` within the settings file.">
+      <option name="closed" value="true" />
+      <created>1745839984467</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1745839984469</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Add GroupPostsView for fetching posts by group and update hosts&#10;&#10;Introduced a new APIView, GroupPostsView, to retrieve posts related to a specific TripGroup using its ID. Adjusted URL patterns to include the new endpoint. Also updated ALLOWED_HOSTS configuration to support dynamic local hostname resolution.">
+      <option name="closed" value="true" />
+      <created>1746871304502</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1746871304503</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Add JWT configuration to settings.py&#10;&#10;Integrated SIMPLE_JWT settings for access and refresh token management. Configures token lifetime, header types, and disables token rotation to improve performance. This sets up the project for token-based authentication.">
+      <option name="closed" value="true" />
+      <created>1746872701404</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1746872701405</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed group posts endpoint">
+      <option name="closed" value="true" />
+      <created>1746893221380</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1746893221380</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,6 +222,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="Collegamento a XAMPP su una porta diversa da localhost" />
+    <MESSAGE value="Collegamento a XAMPP su una porta diversa da localhost - fix" />
+    <MESSAGE value="Add custom create method to UserRegistrationView&#10;&#10;Introduce a `create` method in the `UserRegistrationView` to handle serializer validation explicitly and return appropriate HTTP responses. Also, fix a minor formatting issue in `AUTH_PASSWORD_VALIDATORS` within the settings file." />
+    <MESSAGE value="Add GroupPostsView for fetching posts by group and update hosts&#10;&#10;Introduced a new APIView, GroupPostsView, to retrieve posts related to a specific TripGroup using its ID. Adjusted URL patterns to include the new endpoint. Also updated ALLOWED_HOSTS configuration to support dynamic local hostname resolution." />
+    <MESSAGE value="Add JWT configuration to settings.py&#10;&#10;Integrated SIMPLE_JWT settings for access and refresh token management. Configures token lifetime, header types, and disables token rotation to improve performance. This sets up the project for token-based authentication." />
+    <MESSAGE value="Fixed group posts endpoint" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed group posts endpoint" />
   </component>
 </project>
