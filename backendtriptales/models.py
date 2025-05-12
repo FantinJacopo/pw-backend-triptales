@@ -1,8 +1,12 @@
 import uuid
+import qrcode
+import os
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
+
 
 class User(AbstractUser):
     profile_image = models.ImageField(upload_to='profiles/', blank=True, null=True)
@@ -21,15 +25,42 @@ class TripGroup(models.Model):
     group_image = models.ImageField(upload_to='groups/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     invite_code = models.CharField(max_length=10, unique=True, blank=True)
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)  # Campo QR code
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if not self.invite_code:
             self.invite_code = self.generate_invite_code()
+
+        # Genera il QR code se non esiste
+        if not self.qr_code:
+            self.qr_code = self.generate_qr_code()
+
         super().save(*args, **kwargs)
 
     def generate_invite_code(self):
         return str(uuid.uuid4())[:10]
+
+    def generate_qr_code(self):
+        # Genera il contenuto del QR code (può essere un link o un codice)
+        qr_data = f"{self.invite_code}"
+        qr = qrcode.make(qr_data)
+
+        # Salva il QR code come immagine
+        qr_filename = f"qr_{self.invite_code}.png"
+        qr_path = os.path.join(settings.MEDIA_ROOT, 'qr_codes', qr_filename)
+
+        # Crea la directory se non esiste
+        os.makedirs(os.path.dirname(qr_path), exist_ok=True)
+
+        # Salva il QR code sul filesystem
+        qr.save(qr_path)
+
+        # Restituisci il percorso relativo per il campo ImageField
+        return f"qr_codes/{qr_filename}"
+
+    def __str__(self):
+        return self.group_name
 
 
 class Member(models.Model):
@@ -86,7 +117,7 @@ class UserBadge(models.Model):
     assigned_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = ('user', 'badge')  # evita duplicati
+        unique_together = ('user', 'badge')
 
     def __str__(self):
         return f"{self.user.name} has badge {self.badge.name}"
@@ -98,7 +129,7 @@ class PostLike(models.Model):
     liked_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = ('user', 'post')  # evita duplicati
+        unique_together = ('user', 'post')
 
     def __str__(self):
         return f"{self.user.name} liked Post {self.post.id}"

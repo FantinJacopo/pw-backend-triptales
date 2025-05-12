@@ -12,14 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
-from datetime import timedelta
-import socket
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -30,11 +26,8 @@ SECRET_KEY = 'django-insecure-$v40blbwykbtq5xu%4ixb-imr-z$r@3tg(2_f8v3&0d@8_c%^x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = ['192.168.1.64', '172.17.5.148', '172.17.5.150', '192.168.1.20']
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-    socket.gethostbyname(socket.gethostname())
-]
 
 # Application definition
 
@@ -126,18 +119,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ), #In questo modo l'utente deve essere autenticato per poter usare le API
 }
-
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),      # token di accesso valido per 1 ora
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),      # token di rinnovo valido per 7 giorni
-    "ROTATE_REFRESH_TOKENS": False,                   # non ruota il refresh token ad ogni uso
-    "BLACKLIST_AFTER_ROTATION": False,                # (irrilevante se rotate=False)
-    "AUTH_HEADER_TYPES": ("Bearer",),                 # tipo di header usato (standard)
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "UPDATE_LAST_LOGIN": False                        # disattivato per performance (opzionale)
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/

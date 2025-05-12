@@ -13,8 +13,10 @@ from .views import (
     TripGroupViewSet,
     PostViewSet,
     GroupPostsView,
+    GenerateQRCodeView,  # Nuovo import per la generazione del QR
+    JoinGroupByQRCodeView, join_group,  # Nuovo import per l'accesso tramite QR
 )
-from .views import UserRegistrationView
+
 router = DefaultRouter()
 router.register(r'comments', CommentViewSet)
 router.register(r'badges', BadgeViewSet)
@@ -23,11 +25,13 @@ router.register(r'post-likes', PostLikeViewSet)
 router.register(r'groups', TripGroupViewSet)
 router.register(r'posts', PostViewSet, basename='posts')
 
-
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='register'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(router.urls)),
     path('groups/<int:group_id>/posts/', GroupPostsView.as_view(), name='group-posts'),
+    path('groups/<int:group_id>/generate_qr/', GenerateQRCodeView.as_view(), name='generate_qr'),
+    path('groups/join/', JoinGroupByQRCodeView.as_view(), name='join_group_by_qr'),
+    path('groups/join/', join_group, name='join_group'),
 ]
