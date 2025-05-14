@@ -19,10 +19,19 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserProfileSerializer(serializers.ModelSerializer):
+    profile_image = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ['id', 'email', 'username', 'name', 'profile_image']
+        fields = ['id', 'username', 'name', 'email', 'profile_image', 'registration_date']
+
+    def get_profile_image(self, obj):
+        request = self.context.get('request')
+        if obj.profile_image and hasattr(obj.profile_image, 'url') and request:
+            return request.build_absolute_uri(obj.profile_image.url)
+        return None
+
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:

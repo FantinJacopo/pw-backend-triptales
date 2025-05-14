@@ -11,9 +11,8 @@ from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post
 from .serializers import (
     CommentSerializer, BadgeSerializer, UserBadgeSerializer,
     PostLikeSerializer, UserRegistrationSerializer, TripGroupSerializer,
-    PostSerializer, PostCreateSerializer, UserSerializer
+    PostSerializer, PostCreateSerializer, UserProfileSerializer
 )
-
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
@@ -33,7 +32,6 @@ class UserBadgeViewSet(viewsets.ModelViewSet):
 class PostLikeViewSet(viewsets.ModelViewSet):
     queryset = PostLike.objects.all()
     serializer_class = PostLikeSerializer
-
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -144,6 +142,5 @@ class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = request.user
-        serializer = UserSerializer(user)
+        serializer = UserProfileSerializer(request.user, context={"request": request})
         return Response(serializer.data)

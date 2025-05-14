@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Add QR code functionality and refine group management&#10;&#10;This commit introduces QR code generation for TripGroups, enabling users to join groups via QR codes. It updates models, views, and URLs to support this feature, and replaces image URLs with file uploads for better media management. Additionally, some redundant settings have been cleaned up for clarity.">
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="first commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DjangoProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,8 +117,7 @@
       <workItem from="1745307669019" duration="1181000" />
       <workItem from="1745397735969" duration="2025000" />
       <workItem from="1745657599129" duration="4050000" />
-      <workItem from="1747062461355" duration="6171000" />
-      <workItem from="1747235610575" duration="3201000" />
+      <workItem from="1747062461355" duration="5639000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -125,15 +127,7 @@
       <option name="project" value="LOCAL" />
       <updated>1745308036528</updated>
     </task>
-    <task id="LOCAL-00002" summary="Add QR code functionality and refine group management&#10;&#10;This commit introduces QR code generation for TripGroups, enabling users to join groups via QR codes. It updates models, views, and URLs to support this feature, and replaces image URLs with file uploads for better media management. Additionally, some redundant settings have been cleaned up for clarity.">
-      <option name="closed" value="true" />
-      <created>1747070074971</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1747070074971</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -164,7 +158,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <MESSAGE value="Add QR code functionality and refine group management&#10;&#10;This commit introduces QR code generation for TripGroups, enabling users to join groups via QR codes. It updates models, views, and URLs to support this feature, and replaces image URLs with file uploads for better media management. Additionally, some redundant settings have been cleaned up for clarity." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add QR code functionality and refine group management&#10;&#10;This commit introduces QR code generation for TripGroups, enabling users to join groups via QR codes. It updates models, views, and URLs to support this feature, and replaces image URLs with file uploads for better media management. Additionally, some redundant settings have been cleaned up for clarity." />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
 </project>
