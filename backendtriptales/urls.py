@@ -14,7 +14,7 @@ from .views import (
     PostViewSet,
     GroupPostsView,
     GenerateQRCodeView,  # Nuovo import per la generazione del QR
-    JoinGroupByQRCodeView, join_group,  # Nuovo import per l'accesso tramite QR
+    JoinGroupByQRCodeView, join_group, UserProfileView,  # Nuovo import per l'accesso tramite QR
 )
 
 router = DefaultRouter()
@@ -33,5 +33,6 @@ urlpatterns = [
     path('groups/<int:group_id>/posts/', GroupPostsView.as_view(), name='group-posts'),
     path('groups/<int:group_id>/generate_qr/', GenerateQRCodeView.as_view(), name='generate_qr'),
     path('groups/join/', JoinGroupByQRCodeView.as_view(), name='join_group_by_qr'),
+    path('user/profile/', UserProfileView.as_view(), name='user-profile'),
     path('groups/join/', join_group, name='join_group'),
 ]

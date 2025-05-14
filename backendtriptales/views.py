@@ -1,4 +1,5 @@
 from rest_framework import status, viewsets, generics
+from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -10,7 +11,7 @@ from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post
 from .serializers import (
     CommentSerializer, BadgeSerializer, UserBadgeSerializer,
     PostLikeSerializer, UserRegistrationSerializer, TripGroupSerializer,
-    PostSerializer, PostCreateSerializer
+    PostSerializer, PostCreateSerializer, UserSerializer
 )
 
 
@@ -59,6 +60,13 @@ class TripGroupViewSet(viewsets.ModelViewSet):
         group = serializer.save()
         group.member_set.create(user=self.request.user, role='creator')
         return group
+
+    @action(detail=False, methods=['get'])
+    def my_groups(self, request):
+        user = request.user
+        groups = TripGroup.objects.filter(member__user=user)
+        serializer = self.get_serializer(groups, many=True)
+        return Response(serializer.data)
 
 
 class GroupPostsView(APIView):
@@ -131,3 +139,11 @@ def join_group(request):
         return JsonResponse({"status": "success", "message": f"Unito al gruppo {group.name}"})
     except TripGroup.DoesNotExist:
         return JsonResponse({"status": "error", "message": "QR Code non valido"}, status=404)
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
