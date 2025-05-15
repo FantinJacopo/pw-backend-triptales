@@ -1,11 +1,17 @@
 import uuid
-import qrcode
 import os
+from io import BytesIO
+from PIL import Image
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from django.core.files.base import ContentFile
+
+# Importazione corretta di qrcode
+import qrcode
+from qrcode.image.styledpil import StyledPilImage
 
 
 class User(AbstractUser):
@@ -34,7 +40,7 @@ class TripGroup(models.Model):
 
         # Genera il QR code se non esiste
         if not self.qr_code:
-            self.qr_code = self.generate_qr_code()
+            self.generate_qr_code()
 
         super().save(*args, **kwargs)
 
@@ -42,22 +48,36 @@ class TripGroup(models.Model):
         return str(uuid.uuid4())[:10]
 
     def generate_qr_code(self):
-        # Genera il contenuto del QR code (può essere un link o un codice)
+        # Genera il contenuto del QR code
         qr_data = f"{self.invite_code}"
-        qr = qrcode.make(qr_data)
 
-        # Salva il QR code come immagine
+        # Crea l'oggetto QRCode con le impostazioni corrette
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_L,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(qr_data)
+        qr.make(fit=True)
+
+        # Genera l'immagine del QR code
+        qr_image = qr.make_image(fill_color="black", back_color="white")
+
+        # Salva l'immagine in memoria
+        buffer = BytesIO()
+        qr_image.save(buffer, format='PNG')
+        buffer.seek(0)
+
+        # Crea il nome del file
         qr_filename = f"qr_{self.invite_code}.png"
-        qr_path = os.path.join(settings.MEDIA_ROOT, 'qr_codes', qr_filename)
 
-        # Crea la directory se non esiste
-        os.makedirs(os.path.dirname(qr_path), exist_ok=True)
-
-        # Salva il QR code sul filesystem
-        qr.save(qr_path)
-
-        # Restituisci il percorso relativo per il campo ImageField
-        return f"qr_codes/{qr_filename}"
+        # Salva il file nel campo ImageField
+        self.qr_code.save(
+            qr_filename,
+            ContentFile(buffer.getvalue()),
+            save=False
+        )
 
     def __str__(self):
         return self.group_name

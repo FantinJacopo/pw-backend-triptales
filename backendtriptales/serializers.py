@@ -54,18 +54,41 @@ class PostLikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class TripGroupSerializer(serializers.ModelSerializer):
+    qr_code_url = serializers.SerializerMethodField()
+    group_image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = TripGroup
-        fields = ['id', 'group_name', 'group_image', 'description', 'invite_code', 'created_at']
-        read_only_fields = ['invite_code']
+        fields = ['id', 'group_name', 'group_image', 'group_image_url', 'description', 'invite_code', 'qr_code_url', 'created_at']
+        read_only_fields = ['invite_code', 'qr_code_url']
+
+    def get_qr_code_url(self, obj):
+        request = self.context.get('request')
+        if obj.qr_code and hasattr(obj.qr_code, 'url') and request:
+            return request.build_absolute_uri(obj.qr_code.url)
+        return None
+
+    def get_group_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.group_image and hasattr(obj.group_image, 'url') and request:
+            return request.build_absolute_uri(obj.group_image.url)
+        return None
 
 
 class PostSerializer(serializers.ModelSerializer):
+    image_url = serializers.SerializerMethodField()
+
     class Meta:
         model = Post
-        fields = ['id', 'user', 'trip_group', 'image', 'smart_caption', 'latitude',
+        fields = ['id', 'user', 'trip_group', 'image', 'image_url', 'smart_caption', 'latitude',
                   'longitude', 'created_at', 'ocr_text', 'object_tags']
         read_only_fields = ['user', 'created_at']
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url') and request:
+            return request.build_absolute_uri(obj.image.url)
+        return None
 
 
 class PostCreateSerializer(serializers.ModelSerializer):

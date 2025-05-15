@@ -54,6 +54,11 @@ class TripGroupViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser]
 
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
+
     def perform_create(self, serializer):
         group = serializer.save()
         group.member_set.create(user=self.request.user, role='creator')
@@ -63,7 +68,7 @@ class TripGroupViewSet(viewsets.ModelViewSet):
     def my_groups(self, request):
         user = request.user
         groups = TripGroup.objects.filter(member__user=user)
-        serializer = self.get_serializer(groups, many=True)
+        serializer = self.get_serializer(groups, many=True, context={'request': request})
         return Response(serializer.data)
 
 

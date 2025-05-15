@@ -3,5 +3,6 @@ mysqlclient
 djangorestframework~=3.16.0
 python-decouple~=3.8
 djangorestframework-simplejwt
-Pillow
+Pillow==10.0.0
 django-qrcode~=0.3
+qrcode[pil]==7.4.2
