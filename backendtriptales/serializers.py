@@ -36,7 +36,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = '__all__'
+        fields = ['id', 'post', 'user', 'content', 'created_at']
+        read_only_fields = ['user', 'created_at']
 
 class BadgeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -77,17 +78,28 @@ class TripGroupSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
 
     class Meta:
         model = Post
-        fields = ['id', 'user', 'trip_group', 'image', 'image_url', 'smart_caption', 'latitude',
+        fields = ['id', 'user_id', 'trip_group', 'image', 'image_url', 'smart_caption', 'latitude',
                   'longitude', 'created_at', 'ocr_text', 'object_tags']
-        read_only_fields = ['user', 'created_at']
+        read_only_fields = ['user_id', 'created_at']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url') and request:
-            return request.build_absolute_uri(obj.image.url)
+        if obj.image:
+            # Debug: stampa il percorso dell'immagine
+            print(f"Post {obj.id} image path: {obj.image}")
+            if hasattr(obj.image, 'url'):
+                url = obj.image.url
+                print(f"Post {obj.id} image url: {url}")
+                if request:
+                    full_url = request.build_absolute_uri(url)
+                    print(f"Post {obj.id} full url: {full_url}")
+                    return full_url
+                return url
+        print(f"Post {obj.id} has no image")
         return None
 
 

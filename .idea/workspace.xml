@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Refactor UserSerializer and add media configurations  &#10;&#10;Renamed UserSerializer to UserProfileSerializer and added a method to handle absolute profile image URLs. Updated views to use the new serializer and included registration_date in user fields. Additionally, configured MEDIA_URL and MEDIA_ROOT in settings and updated requirements to include django-qrcode.">
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjangoProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +115,7 @@
       <workItem from="1745397735969" duration="2025000" />
       <workItem from="1745657599129" duration="4050000" />
       <workItem from="1747062461355" duration="5639000" />
-      <workItem from="1747316256399" duration="6323000" />
+      <workItem from="1747316256399" duration="11810000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -137,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747253919811</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support.">
+      <option name="closed" value="true" />
+      <created>1747323033450</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747323033450</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,6 +174,7 @@
     <MESSAGE value="first commit" />
     <MESSAGE value="Fixed group posts endpoint" />
     <MESSAGE value="Refactor UserSerializer and add media configurations  &#10;&#10;Renamed UserSerializer to UserProfileSerializer and added a method to handle absolute profile image URLs. Updated views to use the new serializer and included registration_date in user fields. Additionally, configured MEDIA_URL and MEDIA_ROOT in settings and updated requirements to include django-qrcode." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor UserSerializer and add media configurations  &#10;&#10;Renamed UserSerializer to UserProfileSerializer and added a method to handle absolute profile image URLs. Updated views to use the new serializer and included registration_date in user fields. Additionally, configured MEDIA_URL and MEDIA_ROOT in settings and updated requirements to include django-qrcode." />
+    <MESSAGE value="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support." />
   </component>
 </project>
