@@ -71,13 +71,12 @@ class TripGroupViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(groups, many=True, context={'request': request})
         return Response(serializer.data)
 
-
 class GroupPostsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, group_id):
         posts = Post.objects.filter(trip_group_id=group_id)
-        serializer = PostSerializer(posts, many=True)
+        serializer = PostSerializer(posts, many=True, context={'request': request}) # TODO: controllare perchè in console i comandi escono scritti rossi dopo che ho aggiunto context
         return Response(serializer.data)
 
 
