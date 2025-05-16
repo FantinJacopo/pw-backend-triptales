@@ -109,6 +109,7 @@ class PostSerializer(serializers.ModelSerializer):
         return None
 
     def get_comments_count(self, obj):
+        # Forza il riconteggio ogni volta per avere sempre il valore aggiornato
         return obj.comments.count()
 
 
