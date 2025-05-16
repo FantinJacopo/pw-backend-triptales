@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Corretto bug conteggio commenti per ogni post">
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="L'utente può vedere solo i gruppi di cui fa parte">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backendtriptales/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +41,9 @@
     &quot;accountId&quot;: &quot;ef100bff-bc7c-4d61-b9e2-181ae15ca94f&quot;
   }
 }</component>
+  <component name="HttpClientEndpointsTabState">
+    <option name="cachedRequestData" value="&lt;CachedHttpClientTabRequests&gt;&#10;  &lt;entry key=&quot;f90549848b74dcf54f0626e084f4c5e44eb4137c&quot; value=&quot;###&amp;#10;POST http://192.168.1.20:8000/api/groups/join/&quot; /&gt;&#10;&lt;/CachedHttpClientTabRequests&gt;" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -122,7 +121,7 @@
       <workItem from="1747062461355" duration="5639000" />
       <workItem from="1747316256399" duration="16408000" />
       <workItem from="1747398733101" duration="7339000" />
-      <workItem from="1747418647958" duration="2326000" />
+      <workItem from="1747418647958" duration="4977000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -196,7 +195,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747409080679</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="L'utente può vedere solo i gruppi di cui fa parte">
+      <option name="closed" value="true" />
+      <created>1747421752428</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1747421752428</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +242,7 @@
     <MESSAGE value="Gestione commenti" />
     <MESSAGE value="Aggiunta supporto emoji" />
     <MESSAGE value="Corretto bug conteggio commenti per ogni post" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corretto bug conteggio commenti per ogni post" />
+    <MESSAGE value="L'utente può vedere solo i gruppi di cui fa parte" />
+    <option name="LAST_COMMIT_MESSAGE" value="L'utente può vedere solo i gruppi di cui fa parte" />
   </component>
 </project>
