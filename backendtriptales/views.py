@@ -6,8 +6,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import JsonResponse
 from django.conf import settings
+from django.db.models import Q
+from django.utils import timezone
 
-from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post
+from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post, GroupMembership
 from .serializers import (
     CommentSerializer, BadgeSerializer, UserBadgeSerializer,
     PostLikeSerializer, UserRegistrationSerializer, TripGroupSerializer,
@@ -41,7 +43,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         return context
 
 
-# Resto delle views rimane uguale...
 class BadgeViewSet(viewsets.ModelViewSet):
     queryset = Badge.objects.all()
     serializer_class = BadgeSerializer
@@ -84,14 +85,23 @@ class TripGroupViewSet(viewsets.ModelViewSet):
         return context
 
     def perform_create(self, serializer):
-        group = serializer.save()
-        group.member_set.create(user=self.request.user, role='creator')
+        # Salva il gruppo con l'utente corrente come creator
+        group = serializer.save(creator=self.request.user)
+
+        # Aggiunge automaticamente il creator come membro
+        GroupMembership.objects.create(group=group, user=self.request.user)
+
         return group
 
     @action(detail=False, methods=['get'])
     def my_groups(self, request):
         user = request.user
-        groups = TripGroup.objects.filter(member__user=user)
+
+        # Trova tutti i gruppi dove l'utente è creator o membro
+        groups = TripGroup.objects.filter(
+            Q(creator=user) | Q(members=user)
+        ).distinct()
+
         serializer = self.get_serializer(groups, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -100,7 +110,7 @@ class GroupPostsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, group_id):
-        posts = Post.objects.filter(trip_group_id=group_id)
+        posts = Post.objects.filter(trip_group_id=group_id).order_by('-created_at')
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
 
@@ -116,7 +126,7 @@ class PostViewSet(viewsets.ModelViewSet):
         return PostSerializer
 
     def get_queryset(self):
-        return Post.objects.all()
+        return Post.objects.all().order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -134,9 +144,9 @@ class GenerateQRCodeView(APIView):
             group = TripGroup.objects.get(id=group_id)
             if not group.qr_code:
                 # Genera il QR code se non esiste
-                group.qr_code = group.generate_qr_code()
+                group.generate_qr_code()
                 group.save()
-            qr_code_url = f"{settings.MEDIA_URL}{group.qr_code}"
+            qr_code_url = request.build_absolute_uri(group.qr_code.url)
             return JsonResponse({"status": "success", "qr_code_url": qr_code_url})
         except TripGroup.DoesNotExist:
             return JsonResponse({"status": "error", "message": "Gruppo non trovato"}, status=404)
@@ -152,21 +162,27 @@ class JoinGroupByQRCodeView(APIView):
 
         try:
             group = TripGroup.objects.get(invite_code=qr_code)
-            # Aggiungi l'utente al gruppo
-            group.member_set.create(user=request.user, role='member')
-            return JsonResponse({"status": "success", "message": f"Unito al gruppo {group.group_name}"})
+
+            # Verifica se l'utente è già membro del gruppo
+            membership, created = GroupMembership.objects.get_or_create(
+                group=group,
+                user=request.user,
+                defaults={'joined_at': timezone.now()}
+            )
+
+            if created:
+                return JsonResponse({
+                    "status": "success",
+                    "message": f"Unito al gruppo {group.group_name}"
+                })
+            else:
+                return JsonResponse({
+                    "status": "info",
+                    "message": f"Sei già membro del gruppo {group.group_name}"
+                })
+
         except TripGroup.DoesNotExist:
             return JsonResponse({"status": "error", "message": "QR code non valido"}, status=404)
-
-
-def join_group(request):
-    qr_code = request.POST.get("qr_code")
-    try:
-        group = TripGroup.objects.get(qr_code=qr_code)
-        # Logica per aggiungere l'utente al gruppo
-        return JsonResponse({"status": "success", "message": f"Unito al gruppo {group.name}"})
-    except TripGroup.DoesNotExist:
-        return JsonResponse({"status": "error", "message": "QR Code non valido"}, status=404)
 
 
 class UserProfileView(APIView):

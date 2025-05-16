@@ -14,7 +14,8 @@ from .views import (
     PostViewSet,
     GroupPostsView,
     GenerateQRCodeView,
-    JoinGroupByQRCodeView, join_group, UserProfileView,
+    JoinGroupByQRCodeView,
+    UserProfileView,
 )
 
 router = DefaultRouter()
@@ -34,5 +35,4 @@ urlpatterns = [
     path('groups/<int:group_id>/generate_qr/', GenerateQRCodeView.as_view(), name='generate_qr'),
     path('groups/join/', JoinGroupByQRCodeView.as_view(), name='join_group_by_qr'),
     path('user/profile/', UserProfileView.as_view(), name='user-profile'),
-    path('groups/join/', join_group, name='join_group'),
 ]

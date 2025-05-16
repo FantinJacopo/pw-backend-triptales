@@ -9,7 +9,6 @@ from django.utils import timezone
 from django.conf import settings
 from django.core.files.base import ContentFile
 
-# Importazione corretta di qrcode
 import qrcode
 from qrcode.image.styledpil import StyledPilImage
 
@@ -31,7 +30,9 @@ class TripGroup(models.Model):
     group_image = models.ImageField(upload_to='groups/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     invite_code = models.CharField(max_length=10, unique=True, blank=True)
-    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)  # Campo QR code
+    qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_groups')
+    members = models.ManyToManyField(User, through='GroupMembership', related_name='trip_groups')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
@@ -79,22 +80,34 @@ class TripGroup(models.Model):
             save=False
         )
 
+    def is_creator(self, user):
+        """Verifica se l'utente è il creatore del gruppo"""
+        return self.creator == user
+
+    def add_member(self, user):
+        """Aggiunge un membro al gruppo se non è già presente"""
+        membership, created = GroupMembership.objects.get_or_create(
+            group=self,
+            user=user,
+            defaults={'joined_at': timezone.now()}
+        )
+        return membership, created
+
     def __str__(self):
         return self.group_name
 
 
-class Member(models.Model):
-    ROLE_CHOICES = [
-        ('creator', 'Creator'),
-        ('member', 'Member')
-    ]
+# Tabella intermedia semplificata per tenere traccia della data di ingresso
+class GroupMembership(models.Model):
+    group = models.ForeignKey(TripGroup, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    trip_group = models.ForeignKey(TripGroup, on_delete=models.CASCADE)
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='member')
     joined_at = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        unique_together = ('group', 'user')
+
     def __str__(self):
-        return f"{self.user.name} in {self.trip_group.group_name}"
+        return f"{self.user.name} in {self.group.group_name}"
 
 
 class Post(models.Model):

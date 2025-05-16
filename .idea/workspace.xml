@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Aggiunta supporto emoji">
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Corretto bug conteggio commenti per ogni post">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,25 +53,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Django Server.DjangoProject.executor": "Run",
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.pycharm.django.structure.promotion.once.per.project": "true",
-    "com.codeium.enabled": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Django Server.DjangoProject.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
+    &quot;com.codeium.enabled&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="DjangoProject" type="Python.DjangoServer" factoryName="Django server">
       <module name="DjangoProject" />
@@ -117,7 +121,8 @@
       <workItem from="1745657599129" duration="4050000" />
       <workItem from="1747062461355" duration="5639000" />
       <workItem from="1747316256399" duration="16408000" />
-      <workItem from="1747398733101" duration="5189000" />
+      <workItem from="1747398733101" duration="7339000" />
+      <workItem from="1747418647958" duration="2326000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -183,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747408049341</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Corretto bug conteggio commenti per ogni post">
+      <option name="closed" value="true" />
+      <created>1747409080679</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1747409080679</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,6 +234,7 @@
     <MESSAGE value="Corretto bug del post. Ora mostra anche le immagini" />
     <MESSAGE value="Gestione commenti" />
     <MESSAGE value="Aggiunta supporto emoji" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunta supporto emoji" />
+    <MESSAGE value="Corretto bug conteggio commenti per ogni post" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corretto bug conteggio commenti per ogni post" />
   </component>
 </project>

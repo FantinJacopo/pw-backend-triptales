@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Comment, Badge, UserBadge, PostLike, TripGroup, Post
+from .models import User, Comment, Badge, UserBadge, PostLike, TripGroup, Post, GroupMembership
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -33,7 +33,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return None
 
 
-# Aggiornamento del CommentSerializer per includere info utente
 class CommentSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.name', read_only=True)
     user_profile_image = serializers.SerializerMethodField()
@@ -71,11 +70,16 @@ class PostLikeSerializer(serializers.ModelSerializer):
 class TripGroupSerializer(serializers.ModelSerializer):
     qr_code_url = serializers.SerializerMethodField()
     group_image_url = serializers.SerializerMethodField()
+    creator_name = serializers.CharField(source='creator.name', read_only=True)
+    is_creator = serializers.SerializerMethodField()
+    members_count = serializers.SerializerMethodField()
 
     class Meta:
         model = TripGroup
-        fields = ['id', 'group_name', 'group_image', 'group_image_url', 'description', 'invite_code', 'qr_code_url', 'created_at']
-        read_only_fields = ['invite_code', 'qr_code_url']
+        fields = ['id', 'group_name', 'group_image', 'group_image_url', 'description',
+                  'invite_code', 'qr_code_url', 'creator', 'creator_name', 'is_creator',
+                  'members_count', 'created_at']
+        read_only_fields = ['invite_code', 'qr_code_url', 'creator', 'creator_name', 'is_creator', 'members_count']
 
     def get_qr_code_url(self, obj):
         request = self.context.get('request')
@@ -88,6 +92,15 @@ class TripGroupSerializer(serializers.ModelSerializer):
         if obj.group_image and hasattr(obj.group_image, 'url') and request:
             return request.build_absolute_uri(obj.group_image.url)
         return None
+
+    def get_is_creator(self, obj):
+        request = self.context.get('request')
+        if request and request.user.is_authenticated:
+            return obj.is_creator(request.user)
+        return False
+
+    def get_members_count(self, obj):
+        return obj.members.count()
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -117,3 +130,20 @@ class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['trip_group', 'image', 'smart_caption']
+
+
+class GroupMembershipSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.name', read_only=True)
+    user_email = serializers.CharField(source='user.email', read_only=True)
+    user_profile_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = GroupMembership
+        fields = ['id', 'user', 'user_name', 'user_email', 'user_profile_image', 'group', 'joined_at']
+        read_only_fields = ['user_name', 'user_email', 'user_profile_image', 'joined_at']
+
+    def get_user_profile_image(self, obj):
+        request = self.context.get('request')
+        if obj.user.profile_image and hasattr(obj.user.profile_image, 'url') and request:
+            return request.build_absolute_uri(obj.user.profile_image.url)
+        return None

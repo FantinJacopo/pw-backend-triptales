@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import (
-    User, TripGroup, Member,
+    User, TripGroup, GroupMembership,
     Post, Comment, Badge,
     UserBadge, PostLike
 )
@@ -16,16 +16,17 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(TripGroup)
 class TripGroupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'group_name', 'invite_code', 'created_at')
-    search_fields = ('group_name', 'invite_code')
+    list_display = ('id', 'group_name', 'creator', 'invite_code', 'created_at')
+    search_fields = ('group_name', 'invite_code', 'creator__name')
     list_filter = ('created_at',)
+    readonly_fields = ('invite_code', 'qr_code')
 
 
-@admin.register(Member)
-class MemberAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'trip_group', 'role', 'joined_at')
-    list_filter = ('role', 'joined_at')
-    search_fields = ('user__email', 'trip_group__group_name')
+@admin.register(GroupMembership)
+class GroupMembershipAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'group', 'joined_at')
+    list_filter = ('joined_at',)
+    search_fields = ('user__email', 'user__name', 'group__group_name')
 
 
 @admin.register(Post)
