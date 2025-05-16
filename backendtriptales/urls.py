@@ -13,8 +13,8 @@ from .views import (
     TripGroupViewSet,
     PostViewSet,
     GroupPostsView,
-    GenerateQRCodeView,  # Nuovo import per la generazione del QR
-    JoinGroupByQRCodeView, join_group, UserProfileView,  # Nuovo import per l'accesso tramite QR
+    GenerateQRCodeView,
+    JoinGroupByQRCodeView, join_group, UserProfileView,
 )
 
 router = DefaultRouter()

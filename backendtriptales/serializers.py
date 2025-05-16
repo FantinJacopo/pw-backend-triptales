@@ -33,11 +33,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
         return None
 
 
+# Aggiornamento del CommentSerializer per includere info utente
 class CommentSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.name', read_only=True)
+    user_profile_image = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
-        fields = ['id', 'post', 'user', 'content', 'created_at']
-        read_only_fields = ['user', 'created_at']
+        fields = ['id', 'post', 'user', 'user_name', 'user_profile_image', 'content', 'created_at']
+        read_only_fields = ['user', 'created_at', 'user_name', 'user_profile_image']
+
+    def get_user_profile_image(self, obj):
+        request = self.context.get('request')
+        if obj.user.profile_image and hasattr(obj.user.profile_image, 'url') and request:
+            return request.build_absolute_uri(obj.user.profile_image.url)
+        return None
 
 
 class BadgeSerializer(serializers.ModelSerializer):
@@ -83,18 +93,23 @@ class TripGroupSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     user_id = serializers.IntegerField(source='user.id', read_only=True)
+    user_name = serializers.CharField(source='user.name', read_only=True)
+    comments_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ['id', 'user_id', 'trip_group', 'image', 'image_url', 'smart_caption', 'latitude',
-                  'longitude', 'created_at', 'ocr_text', 'object_tags']
-        read_only_fields = ['user_id', 'created_at']
+        fields = ['id', 'user_id', 'user_name', 'trip_group', 'image', 'image_url', 'smart_caption', 'latitude',
+                  'longitude', 'created_at', 'ocr_text', 'object_tags', 'comments_count']
+        read_only_fields = ['user_id', 'user_name', 'created_at', 'comments_count']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
         if obj.image and hasattr(obj.image, 'url') and request:
             return request.build_absolute_uri(obj.image.url)
         return None
+
+    def get_comments_count(self, obj):
+        return obj.comments.count()
 
 
 class PostCreateSerializer(serializers.ModelSerializer):

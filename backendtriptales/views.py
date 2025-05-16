@@ -14,11 +14,34 @@ from .serializers import (
     PostSerializer, PostCreateSerializer, UserProfileSerializer
 )
 
+
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = Comment.objects.all()
+
+        # Filtra per post_id se presente nei query parameters
+        post_id = self.request.query_params.get('post_id')
+        if post_id is not None:
+            queryset = queryset.filter(post_id=post_id)
+
+        # Ordina i commenti per data di creazione (più recenti prima)
+        return queryset.order_by('-created_at')
+
+    def perform_create(self, serializer):
+        # Assegna automaticamente l'utente loggato
+        serializer.save(user=self.request.user)
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['request'] = self.request
+        return context
 
 
+# Resto delle views rimane uguale...
 class BadgeViewSet(viewsets.ModelViewSet):
     queryset = Badge.objects.all()
     serializer_class = BadgeSerializer
@@ -32,6 +55,7 @@ class UserBadgeViewSet(viewsets.ModelViewSet):
 class PostLikeViewSet(viewsets.ModelViewSet):
     queryset = PostLike.objects.all()
     serializer_class = PostLikeSerializer
+
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -71,12 +95,13 @@ class TripGroupViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(groups, many=True, context={'request': request})
         return Response(serializer.data)
 
+
 class GroupPostsView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, group_id):
         posts = Post.objects.filter(trip_group_id=group_id)
-        serializer = PostSerializer(posts, many=True, context={'request': request}) # TODO: controllare perchè in console i comandi escono scritti rossi dopo che ho aggiunto context
+        serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
 
 
@@ -133,6 +158,7 @@ class JoinGroupByQRCodeView(APIView):
         except TripGroup.DoesNotExist:
             return JsonResponse({"status": "error", "message": "QR code non valido"}, status=404)
 
+
 def join_group(request):
     qr_code = request.POST.get("qr_code")
     try:
@@ -141,6 +167,7 @@ def join_group(request):
         return JsonResponse({"status": "success", "message": f"Unito al gruppo {group.name}"})
     except TripGroup.DoesNotExist:
         return JsonResponse({"status": "error", "message": "QR Code non valido"}, status=404)
+
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
