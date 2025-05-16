@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Corretto bug del post. Ora mostra anche le immagini">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/views.py" afterDir="false" />
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Gestione commenti">
+      <change afterPath="$PROJECT_DIR$/backendtriptales/management/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backendtriptales/management/commands/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backendtriptales/management/commands/fix_emoji_support.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +118,7 @@
       <workItem from="1745657599129" duration="4050000" />
       <workItem from="1747062461355" duration="5639000" />
       <workItem from="1747316256399" duration="16408000" />
-      <workItem from="1747398733101" duration="4085000" />
+      <workItem from="1747398733101" duration="4392000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -161,7 +160,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747336422698</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Gestione commenti">
+      <option name="closed" value="true" />
+      <created>1747407834751</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1747407834751</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -197,6 +204,7 @@
     <MESSAGE value="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support." />
     <MESSAGE value="Corretto bug del post. Per qualche motivo non mostra le immagini" />
     <MESSAGE value="Corretto bug del post. Ora mostra anche le immagini" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corretto bug del post. Ora mostra anche le immagini" />
+    <MESSAGE value="Gestione commenti" />
+    <option name="LAST_COMMIT_MESSAGE" value="Gestione commenti" />
   </component>
 </project>
