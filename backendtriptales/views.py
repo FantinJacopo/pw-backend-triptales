@@ -13,7 +13,8 @@ from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post, 
 from .serializers import (
     CommentSerializer, BadgeSerializer, UserBadgeSerializer,
     PostLikeSerializer, UserRegistrationSerializer, TripGroupSerializer,
-    PostSerializer, PostCreateSerializer, UserProfileSerializer
+    PostSerializer, PostCreateSerializer, UserProfileSerializer,
+    GroupMembershipSerializer
 )
 
 
@@ -104,6 +105,31 @@ class TripGroupViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(groups, many=True, context={'request': request})
         return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def members(self, request, pk=None):
+        """
+        Ottiene i membri di un gruppo specifico
+        """
+        try:
+            group = self.get_object()
+
+            # Ottieni tutte le membership per questo gruppo
+            memberships = GroupMembership.objects.filter(group=group)
+
+            # Serializza i dati con il serializer appropriato
+            serializer = GroupMembershipSerializer(
+                memberships,
+                many=True,
+                context={'request': request}
+            )
+
+            return Response(serializer.data)
+        except TripGroup.DoesNotExist:
+            return Response(
+                {"error": "Gruppo non trovato"},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
 
 class GroupPostsView(APIView):
