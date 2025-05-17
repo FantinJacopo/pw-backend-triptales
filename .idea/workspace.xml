@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="L'utente può vedere solo i gruppi di cui fa parte">
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="first commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backendtriptales/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backendtriptales/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backendtriptales/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,12 +40,9 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/FantinJacopo/pw-backend-triptales.git&quot;,
-    &quot;accountId&quot;: &quot;ef100bff-bc7c-4d61-b9e2-181ae15ca94f&quot;
+    &quot;accountId&quot;: &quot;c0c830ab-17fe-4a2f-8806-347c99887792&quot;
   }
 }</component>
-  <component name="HttpClientEndpointsTabState">
-    <option name="cachedRequestData" value="&lt;CachedHttpClientTabRequests&gt;&#10;  &lt;entry key=&quot;f90549848b74dcf54f0626e084f4c5e44eb4137c&quot; value=&quot;###&amp;#10;POST http://192.168.1.20:8000/api/groups/join/&quot; /&gt;&#10;&lt;/CachedHttpClientTabRequests&gt;" />
-  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -61,7 +60,6 @@
     &quot;RunOnceActivity.pycharm.django.structure.promotion.once.per.project&quot;: &quot;true&quot;,
     &quot;com.codeium.enabled&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -89,9 +87,9 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
-      <option name="host" value="192.168.1.20" />
+      <option name="host" value="192.168.1.64" />
       <option name="additionalOptions" value="" />
-      <option name="browserUrl" value="" />
+      <option name="browserUrl" value="http://192.168.1.20:8000" />
       <option name="runTestServer" value="false" />
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
@@ -119,9 +117,6 @@
       <workItem from="1745397735969" duration="2025000" />
       <workItem from="1745657599129" duration="4050000" />
       <workItem from="1747062461355" duration="5639000" />
-      <workItem from="1747316256399" duration="16408000" />
-      <workItem from="1747398733101" duration="7339000" />
-      <workItem from="1747418647958" duration="4977000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -131,79 +126,7 @@
       <option name="project" value="LOCAL" />
       <updated>1745308036528</updated>
     </task>
-    <task id="LOCAL-00002" summary="Refactor UserSerializer and add media configurations  &#10;&#10;Renamed UserSerializer to UserProfileSerializer and added a method to handle absolute profile image URLs. Updated views to use the new serializer and included registration_date in user fields. Additionally, configured MEDIA_URL and MEDIA_ROOT in settings and updated requirements to include django-qrcode.">
-      <option name="closed" value="true" />
-      <created>1747253919811</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1747253919811</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support.">
-      <option name="closed" value="true" />
-      <created>1747323033450</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1747323033450</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Corretto bug del post. Per qualche motivo non mostra le immagini">
-      <option name="closed" value="true" />
-      <created>1747331868905</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1747331868905</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Corretto bug del post. Ora mostra anche le immagini">
-      <option name="closed" value="true" />
-      <created>1747336422698</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1747336422698</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Gestione commenti">
-      <option name="closed" value="true" />
-      <created>1747407834751</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1747407834751</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Aggiunta supporto emoji">
-      <option name="closed" value="true" />
-      <created>1747407982453</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1747407982453</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Aggiunta supporto emoji">
-      <option name="closed" value="true" />
-      <created>1747408049341</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1747408049341</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Corretto bug conteggio commenti per ogni post">
-      <option name="closed" value="true" />
-      <created>1747409080679</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1747409080679</updated>
-    </task>
-    <task id="LOCAL-00010" summary="L'utente può vedere solo i gruppi di cui fa parte">
-      <option name="closed" value="true" />
-      <created>1747421752428</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1747421752428</updated>
-    </task>
-    <option name="localTasksCounter" value="11" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,15 +157,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <MESSAGE value="Fixed group posts endpoint" />
-    <MESSAGE value="Refactor UserSerializer and add media configurations  &#10;&#10;Renamed UserSerializer to UserProfileSerializer and added a method to handle absolute profile image URLs. Updated views to use the new serializer and included registration_date in user fields. Additionally, configured MEDIA_URL and MEDIA_ROOT in settings and updated requirements to include django-qrcode." />
-    <MESSAGE value="Refactor QR code generation and enhance serializers&#10;&#10;Updated QR code generation to improve functionality and save directly to the ImageField. Enhanced serializers to include absolute URLs for media fields, added JWT token configurations, and adjusted dependencies in requirements for QR code support." />
-    <MESSAGE value="Corretto bug del post. Per qualche motivo non mostra le immagini" />
-    <MESSAGE value="Corretto bug del post. Ora mostra anche le immagini" />
-    <MESSAGE value="Gestione commenti" />
-    <MESSAGE value="Aggiunta supporto emoji" />
-    <MESSAGE value="Corretto bug conteggio commenti per ogni post" />
-    <MESSAGE value="L'utente può vedere solo i gruppi di cui fa parte" />
-    <option name="LAST_COMMIT_MESSAGE" value="L'utente può vedere solo i gruppi di cui fa parte" />
+    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
   </component>
 </project>

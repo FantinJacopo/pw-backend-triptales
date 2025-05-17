@@ -46,7 +46,7 @@ class TripGroup(models.Model):
         super().save(*args, **kwargs)
 
     def generate_invite_code(self):
-        return str(uuid.uuid4())[:10]
+        return str(uuid.uuid4())[:5]
 
     def generate_qr_code(self):
         # Genera il contenuto del QR code
