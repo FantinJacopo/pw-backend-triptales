@@ -1,13 +1,15 @@
+from jsonschema import ValidationError
 from rest_framework import status, viewsets, generics
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
 from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post, GroupMembership
 from .serializers import (
@@ -17,6 +19,13 @@ from .serializers import (
     GroupMembershipSerializer
 )
 
+class UserDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        user = get_object_or_404(User, id=user_id)
+        serializer = UserProfileSerializer(user, context={"request": request})
+        return Response(serializer.data)
 
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
@@ -52,12 +61,6 @@ class BadgeViewSet(viewsets.ModelViewSet):
 class UserBadgeViewSet(viewsets.ModelViewSet):
     queryset = UserBadge.objects.all()
     serializer_class = UserBadgeSerializer
-
-
-class PostLikeViewSet(viewsets.ModelViewSet):
-    queryset = PostLike.objects.all()
-    serializer_class = PostLikeSerializer
-
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -158,6 +161,57 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+class PostLikeViewSet(viewsets.ModelViewSet):
+    queryset = PostLike.objects.all()
+    serializer_class = PostLikeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        queryset = PostLike.objects.all()
+
+        # Filtra per post_id se presente nei query parameters
+        post_id = self.request.query_params.get('post_id')
+        if post_id is not None:
+            queryset = queryset.filter(post_id=post_id)
+
+        # Filtra per user se l'endpoint è 'user'
+        if self.action == 'user_likes':
+            queryset = queryset.filter(user=self.request.user)
+
+        return queryset
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    @action(detail=False, methods=['get'])
+    def user_likes(self, request):
+        """
+        Ottiene tutti i like dell'utente corrente
+        """
+        likes = self.get_queryset().filter(user=request.user)
+        serializer = self.get_serializer(likes, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def post_likes(self, request):
+        """
+        Ottiene tutti i like per un post specifico
+        """
+        post_id = request.query_params.get('post_id')
+        if not post_id:
+            return Response({"error": "post_id query parameter is required"},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({"error": "Post not found"},
+                            status=status.HTTP_404_NOT_FOUND)
+
+        likes = post.likes.all()  # Assicurati che il related_name sia 'likes' nel modello
+        serializer = self.get_serializer(likes, many=True)
+        return Response(serializer.data)
+
 # -----------------------
 # QR Code Management Views
 # -----------------------
@@ -209,7 +263,6 @@ class JoinGroupByQRCodeView(APIView):
 
         except TripGroup.DoesNotExist:
             return JsonResponse({"status": "error", "message": "QR code non valido"}, status=404)
-
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]

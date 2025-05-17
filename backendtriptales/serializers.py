@@ -63,9 +63,22 @@ class UserBadgeSerializer(serializers.ModelSerializer):
 
 
 class PostLikeSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source='user.name', read_only=True)
+
     class Meta:
         model = PostLike
-        fields = '__all__'
+        fields = ['id', 'user', 'user_name', 'post', 'liked_at']
+        read_only_fields = ['user', 'liked_at', 'user_name']
+
+    def validate(self, attrs):
+        # Verifica se l'utente ha già messo like a questo post
+        user = self.context['request'].user
+        post = attrs.get('post')
+
+        if PostLike.objects.filter(user=user, post=post).exists():
+            raise serializers.ValidationError({"error": "You have already liked this post"})
+
+        return attrs
 
 
 class TripGroupSerializer(serializers.ModelSerializer):
@@ -110,13 +123,14 @@ class PostSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.name', read_only=True)
     user_profile_image = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = ['id', 'user_id', 'user_name', 'user_profile_image', 'trip_group', 'image', 'image_url',
                   'smart_caption', 'latitude',
-                  'longitude', 'created_at', 'ocr_text', 'object_tags', 'comments_count']
-        read_only_fields = ['user_id', 'user_name', 'user_profile_image', 'created_at', 'comments_count']
+                  'longitude', 'created_at', 'ocr_text', 'object_tags', 'comments_count', 'likes_count']
+        read_only_fields = ['user_id', 'user_name', 'user_profile_image', 'created_at', 'comments_count', 'likes_count']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
@@ -131,9 +145,10 @@ class PostSerializer(serializers.ModelSerializer):
         return None
 
     def get_comments_count(self, obj):
-        # Forza il riconteggio ogni volta per avere sempre il valore aggiornato
         return obj.comments.count()
 
+    def get_likes_count(self, obj):
+        return obj.likes.count()
 
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
