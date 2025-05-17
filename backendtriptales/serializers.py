@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import User, Comment, Badge, UserBadge, PostLike, TripGroup, Post, GroupMembership
 
+
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -107,18 +108,26 @@ class PostSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     user_id = serializers.IntegerField(source='user.id', read_only=True)
     user_name = serializers.CharField(source='user.name', read_only=True)
+    user_profile_image = serializers.SerializerMethodField()
     comments_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
-        fields = ['id', 'user_id', 'user_name', 'trip_group', 'image', 'image_url', 'smart_caption', 'latitude',
+        fields = ['id', 'user_id', 'user_name', 'user_profile_image', 'trip_group', 'image', 'image_url',
+                  'smart_caption', 'latitude',
                   'longitude', 'created_at', 'ocr_text', 'object_tags', 'comments_count']
-        read_only_fields = ['user_id', 'user_name', 'created_at', 'comments_count']
+        read_only_fields = ['user_id', 'user_name', 'user_profile_image', 'created_at', 'comments_count']
 
     def get_image_url(self, obj):
         request = self.context.get('request')
         if obj.image and hasattr(obj.image, 'url') and request:
             return request.build_absolute_uri(obj.image.url)
+        return None
+
+    def get_user_profile_image(self, obj):
+        request = self.context.get('request')
+        if obj.user.profile_image and hasattr(obj.user.profile_image, 'url') and request:
+            return request.build_absolute_uri(obj.user.profile_image.url)
         return None
 
     def get_comments_count(self, obj):
