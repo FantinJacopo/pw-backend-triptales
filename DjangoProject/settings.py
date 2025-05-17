@@ -1,6 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
 from decouple import config
+import socket
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,7 +18,8 @@ SECRET_KEY = 'django-insecure-$v40blbwykbtq5xu%4ixb-imr-z$r@3tg(2_f8v3&0d@8_c%^x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.64', '172.17.5.148', '172.17.5.150', '192.168.1.20']
+hostname = socket.gethostname()
+ALLOWED_HOSTS = [hostname, socket.gethostbyname(hostname)]
 
 
 # Application definition
