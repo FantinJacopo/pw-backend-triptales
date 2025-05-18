@@ -49,18 +49,15 @@ class CommentSerializer(serializers.ModelSerializer):
             return request.build_absolute_uri(obj.user.profile_image.url)
         return None
 
-
 class BadgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Badge
         fields = '__all__'
 
-
 class UserBadgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserBadge
         fields = '__all__'
-
 
 class PostLikeSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.name', read_only=True)
@@ -79,7 +76,6 @@ class PostLikeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"error": "You have already liked this post"})
 
         return attrs
-
 
 class TripGroupSerializer(serializers.ModelSerializer):
     qr_code_url = serializers.SerializerMethodField()
@@ -116,7 +112,6 @@ class TripGroupSerializer(serializers.ModelSerializer):
     def get_members_count(self, obj):
         return obj.members.count()
 
-
 class PostSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()
     user_id = serializers.IntegerField(source='user.id', read_only=True)
@@ -128,8 +123,8 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ['id', 'user_id', 'user_name', 'user_profile_image', 'trip_group', 'image', 'image_url',
-                  'smart_caption', 'latitude',
-                  'longitude', 'created_at', 'ocr_text', 'object_tags', 'comments_count', 'likes_count']
+                  'smart_caption', 'latitude', 'longitude', 'created_at', 'ocr_text', 'object_tags',
+                  'comments_count', 'likes_count']
         read_only_fields = ['user_id', 'user_name', 'user_profile_image', 'created_at', 'comments_count', 'likes_count']
 
     def get_image_url(self, obj):
@@ -150,11 +145,11 @@ class PostSerializer(serializers.ModelSerializer):
     def get_likes_count(self, obj):
         return obj.likes.count()
 
+
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['trip_group', 'image', 'smart_caption']
-
+        fields = ['trip_group', 'image', 'smart_caption', 'latitude', 'longitude']
 
 class GroupMembershipSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.name', read_only=True)

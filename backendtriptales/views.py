@@ -158,8 +158,29 @@ class PostViewSet(viewsets.ModelViewSet):
         return Post.objects.all().order_by('-created_at')
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        # Estrai i dati del form incluse le coordinate
+        latitude = self.request.data.get('latitude')
+        longitude = self.request.data.get('longitude')
 
+        # Converti le stringhe in float se presenti
+        if latitude:
+            try:
+                latitude = float(latitude)
+            except (ValueError, TypeError):
+                latitude = None
+
+        if longitude:
+            try:
+                longitude = float(longitude)
+            except (ValueError, TypeError):
+                longitude = None
+
+        # Salva il post con l'utente corrente e le coordinate
+        serializer.save(
+            user=self.request.user,
+            latitude=latitude,
+            longitude=longitude
+        )
 
 class PostLikeViewSet(viewsets.ModelViewSet):
     queryset = PostLike.objects.all()
