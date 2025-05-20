@@ -149,7 +149,7 @@ class PostSerializer(serializers.ModelSerializer):
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['trip_group', 'image', 'smart_caption', 'latitude', 'longitude']
+        fields = ['trip_group', 'image', 'smart_caption', 'latitude', 'longitude', "ocr_text", "object_tags"]
 
 class GroupMembershipSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.name', read_only=True)
