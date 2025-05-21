@@ -29,7 +29,7 @@ class TripGroup(models.Model):
     group_name = models.CharField(max_length=100)
     group_image = models.ImageField(upload_to='groups/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    invite_code = models.CharField(max_length=10, unique=True, blank=True)
+    invite_code = models.CharField(max_length=5, unique=True, blank=True)
     qr_code = models.ImageField(upload_to='qr_codes/', blank=True, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_groups')
     members = models.ManyToManyField(User, through='GroupMembership', related_name='trip_groups')
