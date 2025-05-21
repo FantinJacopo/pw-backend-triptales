@@ -7,7 +7,8 @@ import socket
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -19,7 +20,7 @@ SECRET_KEY = 'django-insecure-$v40blbwykbtq5xu%4ixb-imr-z$r@3tg(2_f8v3&0d@8_c%^x
 DEBUG = True
 
 hostname = socket.gethostname()
-ALLOWED_HOSTS = [hostname, socket.gethostbyname(hostname)]
+ALLOWED_HOSTS = [hostname, socket.gethostbyname(hostname), 'localhost', '127.0.0.1', '0.0.0.0', 'shepherd-precious-reliably.ngrok-free.app']
 
 
 # Application definition
