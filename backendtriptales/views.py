@@ -47,11 +47,15 @@ class CommentViewSet(viewsets.ModelViewSet):
         # Assegna automaticamente l'utente loggato
         serializer.save(user=self.request.user)
 
+        # ===== BADGE CHECKS =====
         user_comment_count = Comment.objects.filter(user=self.request.user).count()
+
+        # Check first comment
         if user_comment_count == 1:
             BadgeService.check_and_assign_badges(self.request.user, 'first_comment')
-        BadgeService.check_and_assign_badges(self.request.user, 'comment_count', count=user_comment_count)
 
+        # Check comment count milestone
+        BadgeService.check_and_assign_badges(self.request.user, 'comment_count', count=user_comment_count)
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context['request'] = self.request
@@ -176,19 +180,30 @@ class PostViewSet(viewsets.ModelViewSet):
             longitude=longitude
         )
 
-        # CHECK BADGE
+        # ===== BADGE CHECKS =====
         user_post_count = Post.objects.filter(user=self.request.user).count()
+
+        # Check first post
         if user_post_count == 1:
             BadgeService.check_and_assign_badges(self.request.user, 'first_post')
+
+        # Check post count milestone
         BadgeService.check_and_assign_badges(self.request.user, 'post_count', count=user_post_count)
 
         # Check location badge
         if post.latitude and post.longitude:
             BadgeService.check_and_assign_badges(self.request.user, 'first_location')
 
-        # Check AI badge
-        if post.ocr_text or post.object_tags:
+        # Check AI usage badges
+        if post.ocr_text or (post.object_tags and len(post.object_tags) > 0):
             BadgeService.check_and_assign_badges(self.request.user, 'first_ai')
+
+            # Count AI posts for advanced badge
+            ai_posts_count = Post.objects.filter(
+                user=self.request.user
+            ).exclude(ocr_text='').exclude(object_tags=[]).count()
+
+            BadgeService.check_and_assign_badges(self.request.user, 'ai_count', count=ai_posts_count)
 class PostLikeViewSet(viewsets.ModelViewSet):
     queryset = PostLike.objects.all()
     serializer_class = PostLikeSerializer
