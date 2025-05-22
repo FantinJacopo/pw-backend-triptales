@@ -347,3 +347,97 @@ class UserBadgesByIdView(APIView):
                 {"error": "Errore nel caricamento dei badge"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+class CheckAndAssignBadgesView(APIView):
+    """
+    Vista per verificare e assegnare badge mancanti all'utente corrente
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        assigned_badges = []
+
+        try:
+            # Verifica badge "Fondatore"
+            if TripGroup.objects.filter(creator=user).exists():
+                founder_badge = Badge.objects.get(name="Fondatore")
+                user_badge, created = UserBadge.objects.get_or_create(
+                    user=user,
+                    badge=founder_badge
+                )
+                if created:
+                    assigned_badges.append("Fondatore")
+
+            # Verifica badge "Primo Post"
+            user_posts = Post.objects.filter(user=user)
+            if user_posts.exists():
+                first_post_badge = Badge.objects.get(name="Primo Post")
+                user_badge, created = UserBadge.objects.get_or_create(
+                    user=user,
+                    badge=first_post_badge
+                )
+                if created:
+                    assigned_badges.append("Primo Post")
+
+            # Verifica badge "Fabrizio Corona" (10 post)
+            if user_posts.count() >= 10:
+                photo_badge = Badge.objects.get(name="Fabrizio Corona")
+                user_badge, created = UserBadge.objects.get_or_create(
+                    user=user,
+                    badge=photo_badge
+                )
+                if created:
+                    assigned_badges.append("Fabrizio Corona")
+
+            # Verifica badge "Primo Commento"
+            user_comments = Comment.objects.filter(user=user)
+            if user_comments.exists():
+                first_comment_badge = Badge.objects.get(name="Primo Commento")
+                user_badge, created = UserBadge.objects.get_or_create(
+                    user=user,
+                    badge=first_comment_badge
+                )
+                if created:
+                    assigned_badges.append("Primo Commento")
+
+            # Verifica badge "Kanye West" (20 commenti)
+            if user_comments.count() >= 20:
+                comment_badge = Badge.objects.get(name="Kanye West")
+                user_badge, created = UserBadge.objects.get_or_create(
+                    user=user,
+                    badge=comment_badge
+                )
+                if created:
+                    assigned_badges.append("Kanye West")
+
+            # Verifica badge "PLC" (5 post con posizione)
+            location_posts = Post.objects.filter(
+                user=user,
+                latitude__isnull=False,
+                longitude__isnull=False
+            )
+            if location_posts.count() >= 5:
+                location_badge = Badge.objects.get(name="PLC")
+                user_badge, created = UserBadge.objects.get_or_create(
+                    user=user,
+                    badge=location_badge
+                )
+                if created:
+                    assigned_badges.append("PLC")
+
+            return Response({
+                "status": "success",
+                "assigned_badges": assigned_badges,
+                "message": f"Assegnati {len(assigned_badges)} nuovi badge!" if assigned_badges else "Nessun nuovo badge da assegnare"
+            })
+
+        except Badge.DoesNotExist as e:
+            return Response({
+                "status": "error",
+                "message": f"Badge non trovato: {str(e)}"
+            }, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({
+                "status": "error",
+                "message": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

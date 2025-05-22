@@ -8,6 +8,8 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.core.files.base import ContentFile
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 import qrcode
 from qrcode.image.styledpil import StyledPilImage
@@ -166,3 +168,123 @@ class PostLike(models.Model):
 
     def __str__(self):
         return f"{self.user.name} liked Post {self.post.id}"
+
+
+# ============================
+# SIGNALS PER ASSEGNAZIONE BADGE
+# ============================
+
+@receiver(post_save, sender=TripGroup)
+def assign_founder_badge(sender, instance, created, **kwargs):
+    """
+    Assegna automaticamente il badge "Fondatore" quando un utente crea un gruppo
+    """
+    if created and instance.creator:
+        try:
+            # Cerca il badge "Fondatore"
+            founder_badge = Badge.objects.get(name="Fondatore")
+
+            # Assegna il badge all'utente se non ce l'ha già
+            UserBadge.objects.get_or_create(
+                user=instance.creator,
+                badge=founder_badge,
+                defaults={'assigned_at': timezone.now()}
+            )
+            print(f"Badge 'Fondatore' assegnato a {instance.creator.name}")
+        except Badge.DoesNotExist:
+            print("Badge 'Fondatore' non trovato nel database")
+
+
+@receiver(post_save, sender=Post)
+def assign_post_badges(sender, instance, created, **kwargs):
+    """
+    Assegna badge relativi ai post (es. "Primo Post", "Fabrizio Corona")
+    """
+    if created and instance.user:
+        try:
+            # Controlla se è il primo post dell'utente
+            user_posts_count = Post.objects.filter(user=instance.user).count()
+
+            if user_posts_count == 1:
+                # Assegna badge "Primo Post"
+                first_post_badge = Badge.objects.get(name="Primo Post")
+                UserBadge.objects.get_or_create(
+                    user=instance.user,
+                    badge=first_post_badge,
+                    defaults={'assigned_at': timezone.now()}
+                )
+                print(f"Badge 'Primo Post' assegnato a {instance.user.name}")
+
+            # Badge "Fabrizio Corona" per chi ha postato 10 foto
+            if user_posts_count == 10:
+                photo_badge = Badge.objects.get(name="Fabrizio Corona")
+                UserBadge.objects.get_or_create(
+                    user=instance.user,
+                    badge=photo_badge,
+                    defaults={'assigned_at': timezone.now()}
+                )
+                print(f"Badge 'Fabrizio Corona' assegnato a {instance.user.name}")
+
+        except Badge.DoesNotExist as e:
+            print(f"Badge non trovato: {e}")
+
+
+@receiver(post_save, sender=Comment)
+def assign_comment_badges(sender, instance, created, **kwargs):
+    """
+    Assegna badge relativi ai commenti (es. "Primo Commento", "Kanye West")
+    """
+    if created and instance.user:
+        try:
+            # Controlla se è il primo commento dell'utente
+            user_comments_count = Comment.objects.filter(user=instance.user).count()
+
+            if user_comments_count == 1:
+                # Assegna badge "Primo Commento"
+                first_comment_badge = Badge.objects.get(name="Primo Commento")
+                UserBadge.objects.get_or_create(
+                    user=instance.user,
+                    badge=first_comment_badge,
+                    defaults={'assigned_at': timezone.now()}
+                )
+                print(f"Badge 'Primo Commento' assegnato a {instance.user.name}")
+
+            # Badge "Kanye West" per chi ha fatto 20 commenti
+            if user_comments_count == 20:
+                comment_badge = Badge.objects.get(name="Kanye West")
+                UserBadge.objects.get_or_create(
+                    user=instance.user,
+                    badge=comment_badge,
+                    defaults={'assigned_at': timezone.now()}
+                )
+                print(f"Badge 'Kanye West' assegnato a {instance.user.name}")
+
+        except Badge.DoesNotExist as e:
+            print(f"Badge non trovato: {e}")
+
+
+@receiver(post_save, sender=Post)
+def assign_location_badge(sender, instance, created, **kwargs):
+    """
+    Assegna badge "PLC" per chi ha condiviso 5 post con posizione
+    """
+    if created and instance.user and instance.latitude and instance.longitude:
+        try:
+            # Conta i post con posizione dell'utente
+            location_posts_count = Post.objects.filter(
+                user=instance.user,
+                latitude__isnull=False,
+                longitude__isnull=False
+            ).count()
+
+            if location_posts_count == 5:
+                location_badge = Badge.objects.get(name="PLC")
+                UserBadge.objects.get_or_create(
+                    user=instance.user,
+                    badge=location_badge,
+                    defaults={'assigned_at': timezone.now()}
+                )
+                print(f"Badge 'PLC' assegnato a {instance.user.name}")
+
+        except Badge.DoesNotExist as e:
+            print(f"Badge non trovato: {e}")
