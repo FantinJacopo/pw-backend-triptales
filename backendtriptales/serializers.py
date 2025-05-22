@@ -52,12 +52,15 @@ class CommentSerializer(serializers.ModelSerializer):
 class BadgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Badge
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'badge_image_url']
 
 class UserBadgeSerializer(serializers.ModelSerializer):
+    badge = BadgeSerializer(read_only=True)
+
     class Meta:
         model = UserBadge
-        fields = '__all__'
+        fields = ['id', 'badge', 'assigned_at']
+        read_only_fields = ['assigned_at']
 
 class PostLikeSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source='user.name', read_only=True)
@@ -144,7 +147,6 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_likes_count(self, obj):
         return obj.likes.count()
-
 
 class PostCreateSerializer(serializers.ModelSerializer):
     class Meta:

@@ -16,8 +16,9 @@ from .views import (
     GenerateQRCodeView,
     JoinGroupByQRCodeView,
     UserProfileView,
-    UserDetailView,
+    UserDetailView, UserBadgesView, UserBadgesByIdView,
 )
+
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='register'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -27,6 +28,8 @@ urlpatterns = [
     path('groups/<int:group_id>/generate_qr/', GenerateQRCodeView.as_view(), name='generate_qr'),
     path('user/profile/', UserProfileView.as_view(), name='user-profile'),
     path('users/<int:user_id>/', UserDetailView.as_view(), name='user-detail'),
+    path('user/badges/', UserBadgesView.as_view(), name='user-badges'),
+    path('users/<int:user_id>/badges/', UserBadgesByIdView.as_view(), name='user-badges-by-id'),
 ]
 
 router = DefaultRouter()

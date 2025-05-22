@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 
+from .badge_service import BadgeService
 from .models import Comment, Badge, UserBadge, PostLike, User, TripGroup, Post, GroupMembership
 from .serializers import (
     CommentSerializer, BadgeSerializer, UserBadgeSerializer,
@@ -26,7 +27,6 @@ class UserDetailView(APIView):
         user = get_object_or_404(User, id=user_id)
         serializer = UserProfileSerializer(user, context={"request": request})
         return Response(serializer.data)
-
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -47,21 +47,21 @@ class CommentViewSet(viewsets.ModelViewSet):
         # Assegna automaticamente l'utente loggato
         serializer.save(user=self.request.user)
 
+        user_comment_count = Comment.objects.filter(user=self.request.user).count()
+        if user_comment_count == 1:
+            BadgeService.check_and_assign_badges(self.request.user, 'first_comment')
+        BadgeService.check_and_assign_badges(self.request.user, 'comment_count', count=user_comment_count)
+
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context['request'] = self.request
         return context
-
-
 class BadgeViewSet(viewsets.ModelViewSet):
     queryset = Badge.objects.all()
     serializer_class = BadgeSerializer
-
-
 class UserBadgeViewSet(viewsets.ModelViewSet):
     queryset = UserBadge.objects.all()
     serializer_class = UserBadgeSerializer
-
 class UserRegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserRegistrationSerializer
@@ -75,8 +75,6 @@ class UserRegistrationView(generics.CreateAPIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
 class TripGroupViewSet(viewsets.ModelViewSet):
     queryset = TripGroup.objects.all()
     serializer_class = TripGroupSerializer
@@ -133,8 +131,6 @@ class TripGroupViewSet(viewsets.ModelViewSet):
                 {"error": "Gruppo non trovato"},
                 status=status.HTTP_404_NOT_FOUND
             )
-
-
 class GroupPostsView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -142,8 +138,6 @@ class GroupPostsView(APIView):
         posts = Post.objects.filter(trip_group_id=group_id).order_by('-created_at')
         serializer = PostSerializer(posts, many=True, context={'request': request})
         return Response(serializer.data)
-
-
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     permission_classes = [IsAuthenticated]
@@ -176,12 +170,25 @@ class PostViewSet(viewsets.ModelViewSet):
                 longitude = None
 
         # Salva il post con l'utente corrente e le coordinate
-        serializer.save(
+        post = serializer.save(
             user=self.request.user,
             latitude=latitude,
             longitude=longitude
         )
 
+        # CHECK BADGE
+        user_post_count = Post.objects.filter(user=self.request.user).count()
+        if user_post_count == 1:
+            BadgeService.check_and_assign_badges(self.request.user, 'first_post')
+        BadgeService.check_and_assign_badges(self.request.user, 'post_count', count=user_post_count)
+
+        # Check location badge
+        if post.latitude and post.longitude:
+            BadgeService.check_and_assign_badges(self.request.user, 'first_location')
+
+        # Check AI badge
+        if post.ocr_text or post.object_tags:
+            BadgeService.check_and_assign_badges(self.request.user, 'first_ai')
 class PostLikeViewSet(viewsets.ModelViewSet):
     queryset = PostLike.objects.all()
     serializer_class = PostLikeSerializer
@@ -232,11 +239,6 @@ class PostLikeViewSet(viewsets.ModelViewSet):
         likes = post.likes.all()  # Assicurati che il related_name sia 'likes' nel modello
         serializer = self.get_serializer(likes, many=True)
         return Response(serializer.data)
-
-# -----------------------
-# QR Code Management Views
-# -----------------------
-
 class GenerateQRCodeView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -251,8 +253,6 @@ class GenerateQRCodeView(APIView):
             return JsonResponse({"status": "success", "qr_code_url": qr_code_url})
         except TripGroup.DoesNotExist:
             return JsonResponse({"status": "error", "message": "Gruppo non trovato"}, status=404)
-
-
 class JoinGroupByQRCodeView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -284,10 +284,51 @@ class JoinGroupByQRCodeView(APIView):
 
         except TripGroup.DoesNotExist:
             return JsonResponse({"status": "error", "message": "QR code non valido"}, status=404)
-
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         serializer = UserProfileSerializer(request.user, context={"request": request})
         return Response(serializer.data)
+class UserBadgesView(APIView):
+    """
+    Ottiene i badge dell'utente corrente
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            # IMPORTANTE: select_related per evitare query multiple
+            user_badges = UserBadge.objects.filter(user=request.user).select_related('badge').order_by('-assigned_at')
+            serializer = UserBadgeSerializer(user_badges, many=True, context={"request": request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(f"Errore nel caricamento badge utente corrente: {e}")
+            return Response(
+                {"error": "Errore nel caricamento dei badge"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+class UserBadgesByIdView(APIView):
+    """
+    Ottiene i badge di un utente specifico per ID
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        try:
+            user = get_object_or_404(User, id=user_id)
+            # IMPORTANTE: select_related per evitare query multiple
+            user_badges = UserBadge.objects.filter(user=user).select_related('badge').order_by('-assigned_at')
+            serializer = UserBadgeSerializer(user_badges, many=True, context={"request": request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response(
+                {"error": "Utente non trovato"},
+                status=status.HTTP_404_NOT_FOUND
+            )
+        except Exception as e:
+            print(f"Errore nel caricamento badge utente {user_id}: {e}")
+            return Response(
+                {"error": "Errore nel caricamento dei badge"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
