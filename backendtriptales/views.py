@@ -1,3 +1,4 @@
+from django.db import models
 from jsonschema import ValidationError
 from rest_framework import status, viewsets, generics
 from rest_framework.decorators import action
@@ -441,3 +442,203 @@ class CheckAndAssignBadgesView(APIView):
                 "status": "error",
                 "message": str(e)
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class GroupLikesLeaderboardView(APIView):
+    """
+    Vista per ottenere la classifica degli utenti con più like in un gruppo specifico
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, group_id):
+        try:
+            # Verifica che il gruppo esista e che l'utente sia membro
+            group = get_object_or_404(TripGroup, id=group_id)
+
+            # Verifica che l'utente sia membro del gruppo
+            if not GroupMembership.objects.filter(group=group, user=request.user).exists():
+                return Response(
+                    {"error": "Non sei membro di questo gruppo"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            # Query per ottenere la classifica dei like nel gruppo
+            # Conta i like ricevuti dai post di ogni utente in questo gruppo
+            leaderboard_data = (
+                User.objects
+                .filter(post__trip_group=group)  # Utenti che hanno postato in questo gruppo
+                .annotate(
+                    total_likes=models.Count('post__likes', distinct=True),
+                    posts_count=models.Count('post', distinct=True)
+                )
+                .filter(total_likes__gt=0)  # Solo utenti con almeno un like
+                .order_by('-total_likes', '-posts_count')  # Ordina per like decrescenti, poi per numero post
+                [:10]  # Top 10
+            )
+
+            # Serializza i dati della classifica
+            leaderboard = []
+            for position, user in enumerate(leaderboard_data, 1):
+                user_data = {
+                    'position': position,
+                    'user_id': user.id,
+                    'user_name': user.name,
+                    'user_profile_image': request.build_absolute_uri(
+                        user.profile_image.url) if user.profile_image else None,
+                    'total_likes': user.total_likes,
+                    'posts_count': user.posts_count,
+                    'is_current_user': user.id == request.user.id
+                }
+                leaderboard.append(user_data)
+
+            # Trova la posizione dell'utente corrente se non è nella top 10
+            current_user_position = None
+            if request.user.id not in [user['user_id'] for user in leaderboard]:
+                try:
+                    current_user_stats = (
+                        User.objects
+                        .filter(id=request.user.id, post__trip_group=group)
+                        .annotate(
+                            total_likes=models.Count('post__likes', distinct=True),
+                            posts_count=models.Count('post', distinct=True)
+                        )
+                        .first()
+                    )
+
+                    if current_user_stats and current_user_stats.total_likes > 0:
+                        # Conta quanti utenti hanno più like dell'utente corrente
+                        users_above = (
+                            User.objects
+                            .filter(post__trip_group=group)
+                            .annotate(total_likes=models.Count('post__likes', distinct=True))
+                            .filter(total_likes__gt=current_user_stats.total_likes)
+                            .count()
+                        )
+
+                        current_user_position = {
+                            'position': users_above + 1,
+                            'user_id': request.user.id,
+                            'user_name': request.user.name,
+                            'user_profile_image': request.build_absolute_uri(
+                                request.user.profile_image.url) if request.user.profile_image else None,
+                            'total_likes': current_user_stats.total_likes,
+                            'posts_count': current_user_stats.posts_count,
+                            'is_current_user': True
+                        }
+                except Exception as e:
+                    print(f"Errore nel calcolo posizione utente corrente: {e}")
+
+            return Response({
+                'group_id': group_id,
+                'group_name': group.group_name,
+                'leaderboard': leaderboard,
+                'current_user_position': current_user_position,
+                'total_participants': User.objects.filter(post__trip_group=group).distinct().count()
+            })
+
+        except Exception as e:
+            print(f"Errore nella classifica like del gruppo {group_id}: {e}")
+            return Response(
+                {"error": "Errore nel caricamento della classifica"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class GroupLikesLeaderboardView(APIView):
+    """
+    Vista per ottenere la classifica degli utenti con più like in un gruppo specifico
+    """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, group_id):
+        try:
+            # Verifica che il gruppo esista e che l'utente sia membro
+            group = get_object_or_404(TripGroup, id=group_id)
+
+            # Verifica che l'utente sia membro del gruppo
+            if not GroupMembership.objects.filter(group=group, user=request.user).exists():
+                return Response(
+                    {"error": "Non sei membro di questo gruppo"},
+                    status=status.HTTP_403_FORBIDDEN
+                )
+
+            # Query per ottenere la classifica dei like nel gruppo
+            # Conta i like ricevuti dai post di ogni utente in questo gruppo
+            leaderboard_data = (
+                User.objects
+                .filter(post__trip_group=group)  # Utenti che hanno postato in questo gruppo
+                .annotate(
+                    total_likes=models.Count('post__likes', distinct=True),
+                    posts_count=models.Count('post', distinct=True)
+                )
+                .filter(total_likes__gt=0)  # Solo utenti con almeno un like
+                .order_by('-total_likes', '-posts_count')  # Ordina per like decrescenti, poi per numero post
+                [:10]  # Top 10
+            )
+
+            # Serializza i dati della classifica
+            leaderboard = []
+            for position, user in enumerate(leaderboard_data, 1):
+                user_data = {
+                    'position': position,
+                    'user_id': user.id,
+                    'user_name': user.name,
+                    'user_profile_image': request.build_absolute_uri(
+                        user.profile_image.url) if user.profile_image else None,
+                    'total_likes': user.total_likes,
+                    'posts_count': user.posts_count,
+                    'is_current_user': user.id == request.user.id
+                }
+                leaderboard.append(user_data)
+
+            # Trova la posizione dell'utente corrente se non è nella top 10
+            current_user_position = None
+            if request.user.id not in [user['user_id'] for user in leaderboard]:
+                try:
+                    current_user_stats = (
+                        User.objects
+                        .filter(id=request.user.id, post__trip_group=group)
+                        .annotate(
+                            total_likes=models.Count('post__likes', distinct=True),
+                            posts_count=models.Count('post', distinct=True)
+                        )
+                        .first()
+                    )
+
+                    if current_user_stats and current_user_stats.total_likes > 0:
+                        # Conta quanti utenti hanno più like dell'utente corrente
+                        users_above = (
+                            User.objects
+                            .filter(post__trip_group=group)
+                            .annotate(total_likes=models.Count('post__likes', distinct=True))
+                            .filter(total_likes__gt=current_user_stats.total_likes)
+                            .count()
+                        )
+
+                        current_user_position = {
+                            'position': users_above + 1,
+                            'user_id': request.user.id,
+                            'user_name': request.user.name,
+                            'user_profile_image': request.build_absolute_uri(
+                                request.user.profile_image.url) if request.user.profile_image else None,
+                            'total_likes': current_user_stats.total_likes,
+                            'posts_count': current_user_stats.posts_count,
+                            'is_current_user': True
+                        }
+                except Exception as e:
+                    print(f"Errore nel calcolo posizione utente corrente: {e}")
+
+            return Response({
+                'group_id': group_id,
+                'group_name': group.group_name,
+                'leaderboard': leaderboard,
+                'current_user_position': current_user_position,
+                'total_participants': User.objects.filter(post__trip_group=group).distinct().count()
+            })
+
+        except Exception as e:
+            print(f"Errore nella classifica like del gruppo {group_id}: {e}")
+            return Response(
+                {"error": "Errore nel caricamento della classifica"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )

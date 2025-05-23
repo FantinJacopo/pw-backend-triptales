@@ -16,7 +16,7 @@ from .views import (
     GenerateQRCodeView,
     JoinGroupByQRCodeView,
     UserProfileView,
-    UserDetailView, UserBadgesView, UserBadgesByIdView, CheckAndAssignBadgesView,
+    UserDetailView, UserBadgesView, UserBadgesByIdView, CheckAndAssignBadgesView,  GroupLikesLeaderboardView,
 )
 
 urlpatterns = [
@@ -31,6 +31,7 @@ urlpatterns = [
     path('user/badges/', UserBadgesView.as_view(), name='user-badges'),
     path('users/<int:user_id>/badges/', UserBadgesByIdView.as_view(), name='user-badges-by-id'),
     path('user/check-badges/', CheckAndAssignBadgesView.as_view(), name='check-badges'),
+    path('groups/<int:group_id>/leaderboard/', GroupLikesLeaderboardView.as_view(), name='group-likes-leaderboard'),
 ]
 
 router = DefaultRouter()

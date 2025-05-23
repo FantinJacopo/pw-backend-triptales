@@ -34,7 +34,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Nico B',
-                'description': 'Badge speciale per utenti eccezionali che contribuiscono attivamente alla community.',
+                'description': 'Ti sei unito a molteplici gruppi, sei proprio il Main Character!!!',
                 'badge_image_url': 'https://example.com/badges/star.png'
             },
             {
