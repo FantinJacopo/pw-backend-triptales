@@ -2,6 +2,9 @@
 
 Questa guida ti spiega passo per passo come avviare il backend del progetto **TripTales** in locale usando **Django 4.2** e **MySQL fornito da XAMPP**.
 
+
+Documentazione API completa [qui](https://protective-helicona-baf.notion.site/Documentazione-TripRoom-API-1fc7eb75f1a38006a26ff410fbc82017?pvs=4).
+
 ---
 
 ### ✅ **Requisiti**
@@ -52,6 +55,8 @@ DB_USER=root
 DB_PASSWORD=
 DB_HOST=127.0.0.1
 DB_PORT=3306
+NGROK_AUTH_TOKEN=2xPSuq30Ur...1aYmk
+DJANGO_PORT=8000
 ```
 
 > ⚠️ `DB_PASSWORD` lascia vuoto se in XAMPP non hai impostato una password (default)
@@ -76,6 +81,8 @@ FLUSH PRIVILEGES;
 ```bash
 python manage.py makemigrations
 python manage.py migrate
+python manage.py fix_emoji_support
+python manage.py populate_badges
 ```
 
 ---
@@ -90,13 +97,20 @@ python manage.py createsuperuser
 
 ### 🚀 **8. Avvia il server di sviluppo**
 
+Se hai un server locale, puoi eseguire il server di sviluppo con il comando:
 ```bash
 python manage.py runserver INDIRIZZO_IP_DEL_DISPOSITIVO:8000
 ```
 
-Visita [http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000](http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000)  
-L’admin sarà su [http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000/admin](http://INDIRIZZO_IP_DEL_DISPOSITIVO:8000/admin)
+Con ngrok invece bisogna eseguire:
+```bash
+python manage.py runserver 8000
+
+ngrok #solo se non è ancora installato
+ngrok config add-authtoken $AUTHTOKEN #solo la prima volta
+cmd.exe /c ngrok_start.bat #oppure eseguire il comando: ngrok http --url=shepherd-precious-reliably.ngrok-free.app 8000
+```
 
 ---
 
-### ✅ Fine! Ora sei pronto per sviluppare.
+### ✅ Fine! Ora il backend è attivo!
