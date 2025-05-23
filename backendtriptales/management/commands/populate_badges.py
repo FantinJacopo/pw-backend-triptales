@@ -24,7 +24,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Kanye West',
-                'description': 'Sei un vero chiacchierone! Hai scritto 20 commenti.',
+                'description': 'Sei un vero chiacchierone! Hai scritto 20 commenti... non ti bastava X?',
                 'badge_image_url': 'https://example.com/badges/talkative.png'
             },
             {
