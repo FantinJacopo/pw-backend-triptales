@@ -97,12 +97,13 @@ python manage.py createsuperuser
 
 ### 🚀 **8. Avvia il server di sviluppo**
 
+N.B.: così il backend sarà accessibile solo dalla stessa rete
 Se hai un server locale, puoi eseguire il server di sviluppo con il comando:
 ```bash
 python manage.py runserver INDIRIZZO_IP_DEL_DISPOSITIVO:8000
 ```
 
-Con ngrok invece bisogna eseguire:
+Per rendere il backend accessibile da reti diverse con ngrok invece eseguire:
 ```bash
 python manage.py runserver 8000
 
