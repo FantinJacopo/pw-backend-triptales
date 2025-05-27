@@ -20,8 +20,8 @@ SECRET_KEY = 'django-insecure-$v40blbwykbtq5xu%4ixb-imr-z$r@3tg(2_f8v3&0d@8_c%^x
 DEBUG = True
 
 hostname = socket.gethostname()
-ALLOWED_HOSTS = [hostname, socket.gethostbyname(hostname), 'localhost', '127.0.0.1', '0.0.0.0', 'shepherd-precious-reliably.ngrok-free.app']
 
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -73,11 +73,11 @@ WSGI_APPLICATION = 'DjangoProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+        'NAME': 'pwtriptales_db',
+        'USER': 'root',
+        'PASSWORD': 'rootroot',
+        'HOST': 'db',
+        'PORT': 3306,
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',  # Supporto emoji
