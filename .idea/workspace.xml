@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="Aggiunte immagini profilo utenti dei post">
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    <list default="true" id="d6b89fc0-f957-48c0-aae7-64ad765098f9" name="Changes" comment="commit prof Costa">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DjangoProject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DjangoProject/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,12 +35,12 @@
     &quot;assignee&quot;: &quot;FantinJacopo&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/FantinJacopo/pw-backend-triptales.git",
-    "accountId": "18495dec-5a1d-4ee9-9840-5eda8d23c7cc"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/FantinJacopo/pw-backend-triptales.git&quot;,
+    &quot;accountId&quot;: &quot;18495dec-5a1d-4ee9-9840-5eda8d23c7cc&quot;
   }
-}]]></component>
+}</component>
   <component name="HttpClientEndpointsTabState">
     <option name="cachedRequestData" value="&lt;CachedHttpClientTabRequests&gt;&#10;  &lt;entry key=&quot;f90549848b74dcf54f0626e084f4c5e44eb4137c&quot; value=&quot;###&amp;#10;POST http://192.168.1.20:8000/api/groups/join/&quot; /&gt;&#10;&lt;/CachedHttpClientTabRequests&gt;" />
   </component>
@@ -64,7 +63,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "/Users/albertocosta/Desktop/Project_Work_Quinte/5BII/1_NullPointers/pw-backend-triptales/db",
+    "last_opened_file_path": "/Users/albertocosta/Desktop/Project_Work_Quinte/5BII/1_NullPointers/pw-backend-triptales",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -129,7 +128,8 @@
       <workItem from="1747316256399" duration="16408000" />
       <workItem from="1747398733101" duration="7339000" />
       <workItem from="1747418647958" duration="4977000" />
-      <workItem from="1748364046126" duration="741000" />
+      <workItem from="1748364046126" duration="858000" />
+      <workItem from="1748512021774" duration="6000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <option name="closed" value="true" />
@@ -219,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747484476937</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="commit prof Costa">
+      <option name="closed" value="true" />
+      <created>1748364894970</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1748364894970</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +268,7 @@
     <MESSAGE value="Corretto bug conteggio commenti per ogni post" />
     <MESSAGE value="L'utente può vedere solo i gruppi di cui fa parte" />
     <MESSAGE value="Aggiunte immagini profilo utenti dei post" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunte immagini profilo utenti dei post" />
+    <MESSAGE value="commit prof Costa" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit prof Costa" />
   </component>
 </project>
